@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Document</title>
+</head>
+<body>
+     
+     <form action="/searchVehicle" method="post">
+     <div class="form-row">
+          <div>
+              <label for="country">Country</label>
+              <select id="country" name="country" onchange="updateStates()" required>
+                  <option value="" disabled selected>Select country</option>
+                  <option value="India">India</option>
+                  <option value="USA">USA</option>
+                  <option value="Canada">Canada</option>
+                  <option value="Germany">Germany</option>
+              </select>
+          </div>
+          <div>
+              <label for="state">State</label>
+              <select id="state" name="state" onchange="updateCities()" required>
+                  <option value="" disabled selected>Select state</option>
+              </select>
+          </div>
+          <div>
+              <label for="city">City</label>
+              <select id="city" name="city" required>
+                  <option value="" disabled selected>Select city</option>
+              </select>
+          </div>
+      </div>
+
+      <button type="submit">Search Vehicle</button>
+
+     </form>
+
+
+
+      <script>
+
+const locationData = {
+            USA: {
+                California: ["Los Angeles", "San Francisco"],
+                Texas: ["Houston", "Dallas"]
+            },
+            India: {
+                Maharashtra: ["Mumbai", "Pune"],
+                Gujarat: ["Ahmedabad", "Surat"],
+                Karnataka: ["Bangalore", "Mysore"],
+                Kerala: ["Kochi", "Trivandrum"],   
+                UttarPradesh: ["Lucknow", "Kanpur"],             
+                Punjab: ["Amritsar", "Ludhiana"],           
+                Rajasthan: ["Jaipur", "Jodhpur"],
+                MadhyaPradesh: ["Indore", "Bhopal"],          
+                Uttarakhand: ["Dehradun", "Haridwar"],             
+            },
+            Canada: {
+                Manitoba: ["Winkler"],
+                Alberta: ["Brandon"]
+            },
+            Germany: {
+                Bavaria: ["Nuremberg" , "Munich"],
+                Hamburg: ["Blankenese" , "Altstadt"]
+            }
+        };
+
+        // Function to update states based on selected country
+        function updateStates() {
+            const countrySelect = document.getElementById("country");
+            const stateSelect = document.getElementById("state");
+            const citySelect = document.getElementById("city");
+
+            // Clear existing options
+            stateSelect.innerHTML = '<option value="" disabled selected>Select state</option>';
+            citySelect.innerHTML = '<option value="" disabled selected>Select city</option>';
+
+            const selectedCountry = countrySelect.value;
+            if (selectedCountry && locationData[selectedCountry]) {
+                const states = Object.keys(locationData[selectedCountry]);
+                states.forEach(state => {
+                    const option = document.createElement("option");
+                    option.value = state;
+                    option.textContent = state;
+                    stateSelect.appendChild(option);
+                });
+            }
+        }
+
+        // Function to update cities based on selected state
+        function updateCities() {
+            const countrySelect = document.getElementById("country");
+            const stateSelect = document.getElementById("state");
+            const citySelect = document.getElementById("city");
+
+            // Clear existing options
+            citySelect.innerHTML = '<option value="" disabled selected>Select city</option>';
+
+            const selectedCountry = countrySelect.value;
+            const selectedState = stateSelect.value;
+            if (
+                selectedCountry &&
+                selectedState &&
+                locationData[selectedCountry] &&
+                locationData[selectedCountry][selectedState]
+            ) {
+                const cities = locationData[selectedCountry][selectedState];
+                cities.forEach(city => {
+                    const option = document.createElement("option");
+                    option.value = city;
+                    option.textContent = city;
+                    citySelect.appendChild(option);
+                });
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Vehicle Details</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    body {
+     font-family: Arial, sans-serif;
+     margin: 20px;
+     background-color: #f8f9fa;
+   }
+   
+   .container {
+     max-width: 800px;
+     margin: 0 auto;
+     padding: 20px;
+     background-color: #fff;
+     border-radius: 8px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   }
+   
+   .section {
+     display: flex;
+     flex-direction: column;
+     margin-bottom: 20px;
+   }
+   
+   .section h3 {
+     margin-bottom: 10px;
+   }
+   
+   label {
+     font-weight: bold;
+     margin-bottom: 5px;
+   }
+   
+   input, select, button {
+     width: 100%;
+     padding: 10px;
+     margin-bottom: 15px;
+     border: 1px solid #ddd;
+     border-radius: 5px;
+   }
+   
+   .form-row {
+     display: flex;
+     justify-content: space-between;
+   }
+   
+   .form-row > div {
+     flex: 1;
+     margin-right: 10px;
+   }
+   
+   .form-row > div:last-child {
+     margin-right: 0;
+   }
+   
+   .submit-button {
+     width: 100%;
+     padding: 12px;
+     background-color: #0e9f1f;
+     color: white;
+     font-weight: bold;
+     border: none;
+     border-radius: 5px;
+     cursor: pointer;
+   }
+   
+   .submit-button:hover {
+     background-color: #12801f;
+   }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 style="text-align: center; color:#0e9f1f">Add Vehicle Details</h2>
+        <form th:action="@{/addvehicle}" method="post" enctype="multipart/form-data">
+            <!-- Section 1 -->
+            <div class="section">
+                <h3>Vehicle Details</h3>
+                <label for="vehicleName">Vehicle Name</label>
+                <input type="text" id="vehicleName" name="vehicleName" placeholder="Enter vehicle name" required />
+
+                <label for="vehicleNumber">Vehicle Number Plate</label>
+                <input type="text" id="vehicleNumber" name="vehicleNumber" placeholder="Enter vehicle number plate" required />
+
+                <div class="form-row">
+                    <div>
+                    <label for="category">Category</label>
+                    <select id="category" name="category" onchange="updateTypes()" required>
+                        <option value="" disabled selected>Select Category</option>
+                        <option value="passenger_vehicle">Passenger Vehicle</option>
+                        <option value="agriculture_vehicle">Agriculture Vehicle</option>
+                        <option value="construction_vehicle">Construction Vehicle</option>
+                        <option value="commercial_vehicle">Commercial Vehicle</option>
+                    </select>
+                    </div>  
+
+                    <div>
+                        <label for="type">Type of Vehicle</label>
+                        <select id="type" name="type"  required>
+                            <option value="" disabled selected>Select type Of Vehicle</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="form-row">
+                    <div>
+                        <label for="country">Country</label>
+                        <select id="country" name="country" onchange="updateStates()" required>
+                            <option value="" disabled selected>Select country</option>
+                            <option value="India">India</option>
+                            <option value="USA">USA</option>
+                            <option value="Canada">Canada</option>
+                            <option value="Germany">Germany</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="state">State</label>
+                        <select id="state" name="state" onchange="updateCities()" required>
+                            <option value="" disabled selected>Select state</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="city">City</label>
+                        <select id="city" name="city" required>
+                            <option value="" disabled selected>Select city</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2 -->
+            <div class="section">
+                <h3>Additional Details</h3>
+                <label for="seatingCapacity">Seating Capacity</label>
+                <select id="seatingCapacity" name="seatingCapacity" required>
+                    <option value="" disabled selected>Select seating capacity</option>
+                    <option value="2">2</option>
+                    <option value="4">4</option>
+                    <option value="6">6</option>
+                </select>
+
+                <label for="fuelType">Fuel Type</label>
+                <select id="fuelType" name="fuelType" required>
+                    <option value="" disabled selected>Select fuel type</option>
+                    <option value="Petrol">Petrol</option>
+                    <option value="Diesel">Diesel</option>
+                    <option value="Electric">Electric</option>
+                </select>
+
+                <label for="transmission">Transmission</label>
+                <select id="transmission" name="transmission" required>
+                    <option value="" disabled selected>Select transmission</option>
+                    <option value="Manual">Manual</option>
+                    <option value="Automatic">Automatic</option>
+                </select>
+
+                <label for="numOfWheels">No. of Wheels</label>
+                <select id="numOfWheels" name="numOfWheels" required>
+                    <option value="" disabled selected>Select number of wheels</option>
+                    <option value="2">2</option>
+                    <option value="4">4</option>
+                    <option value="6">6</option>
+                </select>
+
+                <label for="rentPrice">Rent Price</label>
+                <input type="number" id="rentPrice" name="rentPrice" placeholder="Enter rent price" required />
+
+            </div>
+
+            <!-- Common Text Field -->
+            <label for="additionalInfo">Additional Information</label>
+            <input type="text" id="additionalInfo" name="additionalInfo" placeholder="Add any extra details" />
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-button">Add Vehicle</button>
+        </form>
+    </div>
+
+    <script>
+        // Country, State, City data
+        const locationData = {
+            USA: {
+                California: ["Los Angeles", "San Francisco"],
+                Texas: ["Houston", "Dallas"]
+            },
+            India: {
+                Maharashtra: ["Mumbai", "Pune"],
+                Gujarat: ["Ahmedabad", "Surat"],
+                Karnataka: ["Bangalore", "Mysore"],
+                Kerala: ["Kochi", "Trivandrum"],   
+                UttarPradesh: ["Lucknow", "Kanpur"],             
+                Punjab: ["Amritsar", "Ludhiana"],           
+                Rajasthan: ["Jaipur", "Jodhpur"],
+                MadhyaPradesh: ["Indore", "Bhopal"],          
+                Uttarakhand: ["Dehradun", "Haridwar"],             
+            },
+            Canada: {
+                Manitoba: ["Winkler"],
+                Alberta: ["Brandon"]
+            },
+            Germany: {
+                Bavaria: ["Nuremberg" , "Munich"],
+                Hamburg: ["Blankenese" , "Altstadt"]
+            }
+        };
+
+        // Vehicle Type data
+        const typeOfVehicle = {
+            passenger_vehicle: ["Bike" , "Car", "Bus"],
+            agriculture_vehicle: ["Tractor", "Harvester"],
+            construction_vehicle: [ "Bulldozer" , "Roller", "Cement Mixer"],
+            commercial_vehicle: ["Truck", "Cargo", "Trailers"]
+        };
+
+        //Function to update types based on selected category
+        function updateTypes() {
+            const categorySelect = document.getElementById("category");
+            const typeSelect = document.getElementById("type");
+
+            // Clear existing options
+            typeSelect.innerHTML = '<option value="" disabled selected>Select type</option>';
+
+            const selectedcategory = categorySelect.value;
+            if (selectedcategory && typeOfVehicle[selectedcategory]) {
+                const listOfType = Object.keys(typeOfVehicle[selectedcategory]);
+                listOfType.forEach(state => {
+                    const option = document.createElement("option");
+                    option.value = typeOfVehicle[selectedcategory][state];   
+                    option.textContent = typeOfVehicle[selectedcategory][state];
+                    typeSelect.appendChild(option);
+                });
+            }
+        }
+
+
+        // Function to update states based on selected country
+        function updateStates() {
+            const countrySelect = document.getElementById("country");
+            const stateSelect = document.getElementById("state");
+            const citySelect = document.getElementById("city");
+
+            // Clear existing options
+            stateSelect.innerHTML = '<option value="" disabled selected>Select state</option>';
+            citySelect.innerHTML = '<option value="" disabled selected>Select city</option>';
+
+            const selectedCountry = countrySelect.value;
+            if (selectedCountry && locationData[selectedCountry]) {
+                const states = Object.keys(locationData[selectedCountry]);
+                states.forEach(state => {
+                    const option = document.createElement("option");
+                    option.value = state;
+                    option.textContent = state;
+                    stateSelect.appendChild(option);
+                });
+            }
+        }
+
+        // Function to update cities based on selected state
+        function updateCities() {
+            const countrySelect = document.getElementById("country");
+            const stateSelect = document.getElementById("state");
+            const citySelect = document.getElementById("city");
+
+            // Clear existing options
+            citySelect.innerHTML = '<option value="" disabled selected>Select city</option>';
+
+            const selectedCountry = countrySelect.value;
+            const selectedState = stateSelect.value;
+            if (
+                selectedCountry &&
+                selectedState &&
+                locationData[selectedCountry] &&
+                locationData[selectedCountry][selectedState]
+            ) {
+                const cities = locationData[selectedCountry][selectedState];
+                cities.forEach(city => {
+                    const option = document.createElement("option");
+                    option.value = city;
+                    option.textContent = city;
+                    citySelect.appendChild(option);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+

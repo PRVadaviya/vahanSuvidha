@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In to Enterprise Plus</title>
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+  <div class="sign-in-container">
+    
+    <h1>Sign In </h1>
+    <form class="sign-in-form" action="/process-data" method="post">
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" name="email" placeholder="Email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="password-field">
+          <input type="password" name="password" placeholder="Password" required>
+         
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="checkbox" id="keep-signed-in">
+        <label for="keep-signed-in">Keep me signed in</label>
+      </div>
+      <button type="submit" class="sign-in-button">Sign In</button>
+      <a href="/forgotpassword-form" class="forgot-password">Forgot Password?</a>
+
+      <!-- <p th:if="${error}" th:text="${error}"></p>
+      <a th:href="@{/login}">Back to Login</a> -->
+    </form>
+  </div>
+</body>
+</html>
+
+
+<!-- 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In to Enterprise Plus</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="sign-in-container">
+    <div class="logo">
+      <img src="https://via.placeholder.com/50x50" alt="Enterprise Plus Logo" />
+    </div>
+    <h1>Sign In to Enterprise Plus</h1>
+    <form class="sign-in-form">
+      <div class="form-group">
+        <label for="email">Email or Member Number</label>
+        <input type="text" id="email" placeholder="Email or Member Number" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="password-field">
+          <input type="password" id="password" placeholder="Password" required>
+          <span class="show-password">Show</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="checkbox" id="keep-signed-in">
+        <label for="keep-signed-in">Keep me signed in</label>
+      </div>
+      <button type="submit" class="sign-in-button">Sign In</button>
+      <a href="#" class="forgot-password">Forgot Password?</a>
+    </form>
+  </div>
+</body>
+</html> -->
