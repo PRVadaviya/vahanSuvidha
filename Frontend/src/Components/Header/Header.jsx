@@ -1,10 +1,12 @@
 import { Link, NavLink } from "react-router-dom";
+import logo from '../../assets/logo.png'
 
 const Header = () => {
   return (
-    <header className="bg-green-700 text-white">
+    <header className="bg-gray-800 text-white">
       <div className="container mx-auto px-6 flex flex-wrap justify-between items-center py-4">
-        {/* Logo */}
+
+        {/* <img src={logo} alt="" /> */}
         <h1 className="text-2xl font-bold">vahanSuvidha</h1>
 
         {/* Navigation Links */}

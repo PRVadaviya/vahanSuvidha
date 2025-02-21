@@ -3,12 +3,13 @@ import HeroSection from '../HeroSection'
 import Cards from '../HomePage/Cards';
 import Cards2 from '../HomePage/Cards2';
 
-function Reservation() {
+function Reservation()
+{
   return (
     <div>
-        <HeroSection/>
-        <Cards/>
-        <Cards2/>
+      <HeroSection/>
+      <Cards/>
+      <Cards2/>
     </div>
   )
 }
