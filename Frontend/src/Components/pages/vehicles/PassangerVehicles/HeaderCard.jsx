@@ -25,7 +25,7 @@ const HeaderCard = () => {
 
         <div className="flex justify-center space-x-6 text-sm md:text-base font-semibold">
           <NavLink
-            to="/vehicles/passenger/car"
+            to="/vehicles/passenger"
             end
             className={({ isActive }) => `pb-1 ${isActive ? 'text-green-700 underline' : 'text-black'}`}
           >
