@@ -56,7 +56,7 @@ const HeroSection = ({ onComplete }) => {
         minHeight: "60vh",
       }}
     >
-      <div className="container mx-auto mt-40 p-6 bg-white rounded shadow-lg max-w-4xl">
+      <div className="container mx-auto my-6 p-6 bg-white rounded shadow-lg max-w-4xl">
         <h3 className="text-lg font-bold mb-4 text-center">Select Location</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
           <div>

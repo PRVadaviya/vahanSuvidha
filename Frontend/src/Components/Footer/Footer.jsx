@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import logo from '../../assets/logo.png'
 
 export default function Footer() {
     return (
@@ -7,9 +8,9 @@ export default function Footer() {
                 <div className="flex justify-between mb-8">
                     <div className="flex items-center">
                         <img
-                            src="https://alexharkness.com/wp-content/uploads/2020/06/logo-2.png"
+                            src={logo}
                             alt="Logo"
-                            className="h-16"
+                            className="h-50 w-60"
                         />
                     </div>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 text-gray-500">
