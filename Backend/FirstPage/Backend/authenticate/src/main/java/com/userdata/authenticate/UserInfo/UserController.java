@@ -2,24 +2,24 @@ package com.userdata.authenticate.UserInfo;
 
 import jakarta.validation.Valid;
 
-import java.io.IOException;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
+import com.userdata.Searching.SearchDetails;
+import com.userdata.VehicleType.PassengerVehicle.PassengerVehicle;
+import com.userdata.VehicleType.PassengerVehicle.bike;
+import com.userdata.VehicleType.PassengerVehicle.bus;
+import com.userdata.VehicleType.PassengerVehicle.car;
+import com.userdata.VehicleType.PassengerVehicle.PassengerService.CarService;
+import com.userdata.VehicleType.PassengerVehicle.PassengerService.PassengerVehicleService;
 import com.userdata.authenticate.CheckData.FirstConfig;
 import com.userdata.authenticate.SendOtp.EmailService;
 import com.userdata.authenticate.SendOtp.OtpService;
@@ -47,8 +47,13 @@ public class UserController {
     @Autowired
     private EmailService emailService ;
 
-    public String registeredEmail ;
+    @Autowired
+    private PassengerVehicleService passengerVehicleService;
 
+    @Autowired
+    private CarService findVehicleService;
+
+   
     @GetMapping("/test")
     public String testPage() {
         return "test";
@@ -120,18 +125,163 @@ public class UserController {
         }
     }
 
-    @PostMapping("/addvehicle")
-    public String postMethodName(@ModelAttribute Vehicle vehicle, BindingResult result, Model model) throws IOException {
+    @PostMapping("/vehicle/addvehicle")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> addVehicleDetails(@RequestBody Vehicle vehicle)  {
+      
+        Map<String, String> response = new HashMap<>();
+       
+        if(vehicle.getCategory().equals("passenger_vehicle")){
 
-        if (result.hasErrors()) {
-            return "AddVehicle";
+            PassengerVehicle passengerVehicle1 = new PassengerVehicle();
+            
+            if(vehicle.getType().equals("Car")){
+
+                car car1 = new car();
+                //vehicle Info
+                car1.setVehicleName(vehicle.getVehicleName());
+                car1.setVehicleNumber(vehicle.getVehicleNumber());
+                car1.setVehicleType(vehicle.getType());
+                //location
+                car1.setLocationCity(vehicle.getCity());
+                car1.setLocationState(vehicle.getState());
+                car1.setLocationCountry(vehicle.getCountry());
+                //Extra Info
+                car1.setSeatingCapacity(vehicle.getSeatingCapacity());
+                car1.setFuelType(vehicle.getFuelType());
+                car1.setTransmission(vehicle.getTransmission());
+                car1.setNumOfWheels(vehicle.getNumOfWheels());
+                car1.setVehicleRentPrice(vehicle.getRentPrice());
+                car1.setVehicleAdditionalInfo(vehicle.getAdditionalInfo()); 
+                car1.setBooked(false);
+
+                //It's set passenger vehicle is car type
+                passengerVehicle1.setPassengerVehicleId(102);
+                car1.setPassengerVehicle(passengerVehicle1);
+
+                List<car> carList = new ArrayList<car>();
+                carList.add(car1);
+                passengerVehicle1.setCarList(carList);
+
+                //save vehicle object
+                vehicleService.saveVehicle(vehicle);
+                passengerVehicleService.saveVehicle(passengerVehicle1);
+
+                response.put("message", "Vehicle added successfully!");
+                return ResponseEntity.ok(response);
+                
+            }else if(vehicle.getType().equals("Bike"))
+            {
+                bike bike1 = new bike();
+ 
+                bike1.setVehicleName(vehicle.getVehicleName());
+                bike1.setVehicleNumber(vehicle.getVehicleNumber());
+                bike1.setVehicleType(vehicle.getType());
+    
+                bike1.setLocationCity(vehicle.getCity());
+                bike1.setLocationState(vehicle.getState());
+                bike1.setLocationCountry(vehicle.getCountry());
+    
+                bike1.setSeatingCapacity(vehicle.getSeatingCapacity());
+                bike1.setFuelType(vehicle.getFuelType());
+                bike1.setTransmission(vehicle.getTransmission());
+                bike1.setNumOfWheels(vehicle.getNumOfWheels());
+                bike1.setVehicleRentPrice(vehicle.getRentPrice());
+                bike1.setVehicleAdditionalInfo(vehicle.getAdditionalInfo()); 
+                bike1.setBooked(false);
+                
+                //It's set passenger vehicle is bike type
+                passengerVehicle1.setPassengerVehicleId(101);
+                bike1.setPassengerVehicle(passengerVehicle1);
+
+                List<bike> bikeList = new ArrayList<bike>();
+                bikeList.add(bike1);
+                passengerVehicle1.setBikeList(bikeList);
+
+                vehicleService.saveVehicle(vehicle);
+                passengerVehicleService.saveVehicle(passengerVehicle1);
+
+                response.put("message", "Vehicle added successfully!");
+                return ResponseEntity.ok(response);
+
+            }else if(vehicle.getType().equals("Bus"))
+            {
+                bus bus1 = new bus();
+                
+                bus1.setVehicleName(vehicle.getVehicleName());
+                bus1.setVehicleNumber(vehicle.getVehicleNumber());
+                bus1.setVehicleType(vehicle.getType());
+
+                bus1.setLocationCity(vehicle.getCity());
+                bus1.setLocationState(vehicle.getState());
+                bus1.setLocationCountry(vehicle.getCountry());
+
+                bus1.setSeatingCapacity(vehicle.getSeatingCapacity());
+                bus1.setFuelType(vehicle.getFuelType());
+                bus1.setTransmission(vehicle.getTransmission());
+                bus1.setNumOfWheels(vehicle.getNumOfWheels());
+                bus1.setVehicleRentPrice(vehicle.getRentPrice());
+                bus1.setVehicleAdditionalInfo(vehicle.getAdditionalInfo()); 
+                bus1.setBooked(false);
+
+                //It's set passenger vehicle is bus type
+                passengerVehicle1.setPassengerVehicleId(103);
+                bus1.setPassengerVehicle(passengerVehicle1);
+
+                List<bus> busList = new ArrayList<bus>();
+                busList.add(bus1);
+                passengerVehicle1.setBusList(busList);
+
+                vehicleService.saveVehicle(vehicle);
+                passengerVehicleService.saveVehicle(passengerVehicle1);
+
+                response.put("message", "Vehicle added successfully!");
+                return ResponseEntity.ok(response);
+            }
+
+
+        }else if(vehicle.getCategory() == "agriculture_vehicle")
+        {
+
+
+
+        }else if(vehicle.getCategory() == "construction_vehicle")
+        {
+
+
+
+        }else if(vehicle.getCategory() == "commercial_vehicle")
+        {
+
+
+
+        }
+            response.put("message", "Vehicle category not found!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        
+    }
+
+    @PostMapping("/vehicle/search")
+    @ResponseBody
+    public ResponseEntity<Map<String, List<car>>> searchVehicle(@RequestBody SearchDetails searchDetails) {
+        
+        Map<String, List<car>> response = new HashMap<>();
+
+        List<car> carList = findVehicleService.findCars(searchDetails.getSearchCountry(), searchDetails.getSearchState(), searchDetails.getSearchCity(), 102);
+
+        if (carList == null) {
+            carList = new ArrayList<>();
         }
 
-        vehicle.setBooked(false);
-        vehicleService.saveVehicle(vehicle);
-        model.addAttribute("message", "Vehicle added successfully!");
-        return "login";
+        if (!carList.isEmpty()) {
+            response.put("vehicles_found", carList);
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("vehicles_found", new ArrayList<>());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
     }
+
 
     public boolean checkEmail( String email) {
         
@@ -160,8 +310,7 @@ public class UserController {
             boolean isRegisteredEmail = checkEmail(email);
          
             if (isRegisteredEmail) {
-                //is used for reset password in this email
-                registeredEmail = email ;
+                
 
                 String otp = "Your Otp is :" + otpService.generateOtp() ;
 
@@ -207,17 +356,18 @@ public class UserController {
     
     @PostMapping("/reset-password")
     @ResponseBody
-    public ResponseEntity<Map<String,String>> resetPassword(@RequestParam("password") String password , @RequestParam("confirmpassword") String confirmPassword) {
+    public ResponseEntity<Map<String,String>> resetPassword(@RequestBody Map<String, String> request) {
        
         Map<String,String> response = new HashMap<>();
 
-        System.out.println("Password : " + password + " Confirm Password : " + confirmPassword);
+        String password = request.get("newPassword");
+        String email = request.get("email");
 
-        if(password.equals(confirmPassword)){
+        System.out.println("Password : " + password + " email : " + email);
 
             String encodedPassword = firstConfig.passwordEncoder().encode(password);
 
-            int updatedRaw = userRepository.updateUserPassword(registeredEmail , password , encodedPassword);
+            int updatedRaw = userRepository.updateUserPassword(email , password , encodedPassword);
 
             if (updatedRaw > 0 ) {
                 
@@ -229,16 +379,9 @@ public class UserController {
             else
             {
                 response.put("sucess", "false");
-                response.put("message", "Email not found!");
+                response.put("message", "Something went wronge!!");
                 return ResponseEntity.ok(response);
             }
-        }
-        else
-        {
-            response.put("sucess", "false");
-            response.put("message", "user Email not found!");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
         
     }
     
