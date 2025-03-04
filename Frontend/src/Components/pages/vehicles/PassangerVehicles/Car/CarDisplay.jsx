@@ -1,18 +1,30 @@
-import React from "react";
-import CAR_DATA from "./CarData";
+import React, { useEffect } from "react";
+import CarData from "./CarData";
 import './car.css'
 import HeaderCard from "../HeaderCard";
+import { addToCart } from "../../../../../features/AddToCart/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const CarDisplay = () => {
+
+  const dispatch = useDispatch()
+
+  const items = useSelector((state) => state.cart);
+
+  useEffect(() => {
+    console.log(items);
+  }, [items])
+
+
   return (
     <div>
       <HeaderCard />
       <div className="app-container">
         <h1>Car</h1>
         <div className="car-grid">
-          {CAR_DATA.map((carGroup, index) => (
-            carGroup.map((car, carID) => (
-              <div key={carID} className="car-card">
+          {CarData.map((car, index) => (
+
+              <div key={index} className="car-card">
                 <div className="car-image">
                   <img src={car.img} alt={car.name} />
                 </div>
@@ -27,10 +39,14 @@ const CarDisplay = () => {
                     <p>Fuel: {car.fuel}</p>
                     <p>Transmission: {car.transmission}</p>
                   </div>
-                  <button className="book-btn">Add To Cart</button>
+                  <button
+                    onClick={() => {
+                      dispatch(addToCart(car))
+                    }}
+                    className="book-btn">Add To Cart</button>
                 </div>
               </div>
-            ))
+
           ))}
         </div>
       </div>

@@ -11,19 +11,19 @@ const Header = () => {
 
         {/* Navigation Links */}
         <nav className="hidden lg:flex space-x-8">
-          <NavLink to="/" className={({isActive})=> `hober:underline ${isActive ? 'text-green-500' : 'text-white'}`}>
+          <NavLink to="/" className={({ isActive }) => `hober:underline ${isActive ? 'text-green-500' : 'text-white'}`}>
             Reservation
           </NavLink>
-          <NavLink to="/vehicles" className={({isActive})=> `hober:underline ${isActive ? 'text-green-500' : 'text-white'}`}>
+          <NavLink to="/vehicles" className={({ isActive }) => `hober:underline ${isActive ? 'text-green-500' : 'text-white'}`}>
             Vehicles
           </NavLink>
-          <NavLink to="/equipment" className={({isActive})=> `hober:underline ${isActive ? 'text-green-500' : 'text-white'}`}>
+          <NavLink to="/equipment" className={({ isActive }) => `hober:underline ${isActive ? 'text-green-500' : 'text-white'}`}>
             Equipment
           </NavLink>
-          <NavLink to="/bussiness" className={({isActive})=> `hober:underline ${isActive ? 'text-green-500' : 'text-white'}`}>
+          <NavLink to="/bussiness" className={({ isActive }) => `hober:underline ${isActive ? 'text-green-500' : 'text-white'}`}>
             For Bussiness
           </NavLink>
-          <NavLink to="/booking" className={({isActive})=> `hober:underline ${isActive ? 'text-green-500' : 'text-white'}`}>
+          <NavLink to="/booking" className={({ isActive }) => `hober:underline ${isActive ? 'text-green-500' : 'text-white'}`}>
             Booking Status
           </NavLink>
 
@@ -31,9 +31,9 @@ const Header = () => {
 
         {/* Help and Sign In Links */}
         <div className="hidden lg:flex space-x-4 items-center">
-          <a href="#help" className="text-sm hover:underline">
+          <NavLink to="/addtocart" className={({ isActive }) => `hover:underline ${isActive ? 'text-green-500' : 'text-white'}`}>
             Add to cart
-          </a>
+          </NavLink>
           {/* <a href="#login" className="text-sm hover:underline">
             Sign In / Join
           </a> */}
@@ -43,7 +43,7 @@ const Header = () => {
         </div>
 
         {/* Mobile Menu */}
-        <div className="block lg:hidden">
+        {/* <div className="block lg:hidden">
           <button
             className="text-white focus:outline-none"
             onClick={() => {
@@ -67,10 +67,10 @@ const Header = () => {
             </svg>
           </button>
         </div>
-      </div>
+      </div> */}
 
-      {/* Mobile Dropdown Menu */}
-      <div
+        {/* Mobile Dropdown Menu */}
+        {/* <div
         id="mobile-menu"
         className="hidden lg:hidden flex flex-col bg-green-700 text-white space-y-2 px-6 py-4"
       >
@@ -99,6 +99,7 @@ const Header = () => {
         <a href="#login" className="text-sm hover:underline">
           Sign In / Join
         </a>
+      </div> */}
       </div>
     </header>
   );
