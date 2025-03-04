@@ -45,6 +45,9 @@ import TransportationEquipmentLayout from './Components/pages/equipment/Transpor
 import ShippingContainersDisplay from './Components/pages/equipment/TransportationEquipment/ShippingContainers/ShippingContainersDisplay.jsx'
 import WaterTankorDisplay from './Components/pages/equipment/TransportationEquipment/WaterTankor/WaterTankorDisplay.jsx'
 import Equipments from './Components/pages/equipment/Equipments.jsx'
+import { Provider } from 'react-redux'
+import store from './store.js'
+import AddToCart from './Components/pages/AddToCart.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -65,11 +68,11 @@ const router = createBrowserRouter(
           </Route>
           <Route path="aggricultural" element={<AggriculturalLayout />} >
             <Route index element={<HarvestorDisplay />} />
-            <Route path='tractor' element={<TractorDisplay/>} />
+            <Route path='tractor' element={<TractorDisplay />} />
           </Route>
           <Route path="commercial" element={<CommercialLayout />} >
-            <Route index element={ <TrailerDisplay/> } />
-            <Route path='truck' element={ <TruckDisplay/> } />
+            <Route index element={<TrailerDisplay />} />
+            <Route path='truck' element={<TruckDisplay />} />
           </Route>
           <Route path="construction" element={<ConstructionLayout />} >
             <Route index element={<BuldozerDisplay />} />
@@ -86,24 +89,26 @@ const router = createBrowserRouter(
             <Route index element={<PlowDisplay />} />
             <Route path='rotavator' element={<RotavatorDisplay />} />
             <Route path='thresher' element={<ThresherDisplay />} />
-            <Route path='trolly' element={ <TrollyDisplay/>} />
+            <Route path='trolly' element={<TrollyDisplay />} />
           </Route>
           <Route path='construction' element={<ConstructionEquipmentLayout />} >
             <Route index element={<ExcavatorBucketDisplay />} />
             <Route path='hydrolic-breaker' element={<HydrolicBreakerDisplay />} />
-            <Route path='road-sweeper' element={ <RoadSweeperDisplay/> } />
+            <Route path='road-sweeper' element={<RoadSweeperDisplay />} />
           </Route>
           <Route path='medicalequipment' element={<MedicalEquipmentLayout />} >
             <Route index element={<ChairDisplay />} />
-            <Route path='walker' element={<WalkerDisplay/>} />
+            <Route path='walker' element={<WalkerDisplay />} />
+          </Route>
+          <Route path='transportationEquipment' element={<TransportationEquipmentLayout />} >
+            <Route index element={<ShippingContainersDisplay />} />
+            <Route path='waterTankor' element={<WaterTankorDisplay />} />
           </Route>
         </Route>
-        <Route path='transportationEquipment' element={<TransportationEquipmentLayout />} >
-          <Route index element={<ShippingContainersDisplay />} />
-          <Route path='waterTankor' element={ <WaterTankorDisplay/>} />
-        </Route>
+
         <Route path="bussiness" element={<Business />} />
         <Route path="booking" element={<Booking />} />
+        <Route path='addtocart' element={<AddToCart/>}  />
       </Route>
       <Route path="about" element={<AboutUs />} />
       <Route path="privacypolicy" element={<PrivacyPolicy />} />
@@ -114,6 +119,8 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>
 );

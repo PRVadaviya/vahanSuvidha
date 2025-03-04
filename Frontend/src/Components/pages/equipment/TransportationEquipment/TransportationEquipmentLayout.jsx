@@ -1,7 +1,5 @@
 import React from 'react'
-import HeaderCard from './HeaderCard'
 import { Outlet } from 'react-router-dom'
-import HeroSection from '../../../HeroSection'
 import Serch from '../Serch'
 
 function TransportationEquipmentLayout() {
@@ -13,4 +11,4 @@ function TransportationEquipmentLayout() {
   )
 }
 
-export default TransportationEquipmentLayout
+export default TransportationEquipmentLayout;
