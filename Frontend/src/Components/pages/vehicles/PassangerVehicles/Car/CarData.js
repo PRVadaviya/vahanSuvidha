@@ -8,7 +8,7 @@ import Toyota from '../../../../../assets/Passanger_vehicles/toyotacamry.jpg';
 export const CarData = [
     {
         name: "VW Golf 6",
-        price: "37",
+        price: "1",
         img: Golf6,
         model: "Golf 6",
         mark: "Volkswagen",
@@ -20,7 +20,7 @@ export const CarData = [
     },
     {
         name: "Audi A1 S-Line",
-        price: "45",
+        price: "1",
         img: AudiA1,
         model: "Audi",
         mark: "A1",
@@ -32,7 +32,7 @@ export const CarData = [
     },
     {
         name: "Toyota Camry",
-        price: "30",
+        price: "1",
         img: Toyota,
         model: "Camry",
         mark: "Toyota",
@@ -44,7 +44,7 @@ export const CarData = [
     },
     {
         name: "BMW 320 ModernLine",
-        price: "35",
+        price: "1",
         img: Bmw320,
         model: "320",
         mark: "BMW",
@@ -56,7 +56,7 @@ export const CarData = [
     },
     {
         name: "Mercedes-Benz GLK",
-        price: "50",
+        price: "1",
         img: Benz,
         model: "Benz GLK",
         mark: "Mercedes",
@@ -68,7 +68,7 @@ export const CarData = [
     },
     {
         name: "VW Passat CC",
-        price: "25",
+        price: "1",
         img: Passat,
         model: "Passat CC",
         mark: "Volkswagen",

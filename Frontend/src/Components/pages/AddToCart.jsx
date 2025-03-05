@@ -1,6 +1,6 @@
-import { useSelector, useDispatch } from "react-redux";
-import { removeFromCart, increaseQuantity, decreaseQuantity } from "../../features/AddToCart/cartSlice";
-import { useEffect } from "react";
+// import { useSelector, useDispatch } from "react-redux";
+// import { removeFromCart, increaseQuantity, decreaseQuantity } from "../../features/AddToCart/cartSlice";
+// import { useEffect } from "react";
 
 // const AddToCart = () => {
 //     const cartItems = useSelector((state) => state.cart); // Get cart items
@@ -137,6 +137,90 @@ import { useEffect } from "react";
 // import { useDispatch, useSelector } from "react-redux";
 // import { addToCart, removeToCart } from "../redux/cartSlice";
 
+// const AddToCart = () => {
+//     const dispatch = useDispatch();
+//     const cartItems = useSelector((state) => state.cart);
+
+//     const handleQuantityChange = (item, quantity) => {
+//         if (quantity > 0) {
+//             dispatch(addToCart({ ...item, quantity }));
+//         }
+//     };
+
+//     const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+//     const gst = subtotal * 0.18;
+//     const companyCharges = subtotal * 0.02;
+//     const total = subtotal + gst + companyCharges;
+
+//     return (
+//         <div className="container mx-auto p-4">
+//             <h2 className="text-2xl font-bold mb-4">Shopping Cart</h2>
+//             <div className="grid grid-cols-3 gap-4">
+//                 <div className="col-span-2 bg-white p-4 rounded shadow h-[600px] overflow-y-auto">
+//                     {cartItems.length === 0 ? (
+//                         <p>Your cart is empty.</p>
+//                     ) : (
+//                         cartItems.map((item) => (
+//                             <div key={item.name} className="flex items-center border-b p-4">
+//                                 <img src={item.img} alt={item.name} className="w-20 h-20 mr-4 rounded" />
+//                                 <div className="flex-1">
+//                                     <h3 className="font-bold">{item.name}</h3>
+//                                     <p className="text-gray-500">${item.price} per day</p>
+//                                     <div className="flex items-center mt-2">
+//                                         <span className="mr-2">Quantity:</span>
+//                                         <button
+//                                             className="px-2 py-1 border rounded bg-gray-200"
+//                                             onClick={() => dispatch(decreaseQuantity(item))}
+//                                         >
+//                                             -
+//                                         </button>
+//                                         <span className="mx-2">{item.quantity}</span>
+//                                         <button
+//                                             className="px-2 py-1 border rounded bg-gray-200"
+//                                             onClick={() => dispatch(increaseQuantity(item))}
+//                                         >
+//                                             +
+//                                         </button>
+//                                     </div>
+//                                 </div>
+//                                 <button
+//                                     onClick={() => dispatch(removeFromCart(item))}
+//                                     className="text-red-500 hover:text-red-700 ml-4"
+//                                 >
+//                                     Remove
+//                                 </button>
+//                             </div>
+//                         ))
+//                     )}
+//                 </div>
+
+//                 <div className="bg-white p-4 rounded shadow max-h-[300px] self-start">
+//                     <h3 className="font-bold text-xl mb-2">Order Summary</h3>
+//                     <p>Subtotal: ${subtotal.toFixed(2)}</p>
+//                     <p>GST (18%): ${gst.toFixed(2)}</p>
+//                     <p>Company Charges (2%): ${companyCharges.toFixed(2)}</p>
+//                     <hr className="my-2" />
+//                     <p className="font-bold">Total: ${total.toFixed(2)}</p>
+//                     <button className="bg-green-500 text-white px-4 py-2 mt-4 rounded w-full">
+//                         Proceed to Checkout
+//                     </button>
+//                 </div>
+
+//             </div>
+//         </div>
+//     );
+// };
+
+// // export default CartPage;
+
+
+// export default AddToCart;
+
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, removeFromCart, increaseQuantity, decreaseQuantity } from "../../features/AddToCart/cartSlice";
+import logo from "../../assets/logo.png"
+
 const AddToCart = () => {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart);
@@ -151,6 +235,39 @@ const AddToCart = () => {
     const gst = subtotal * 0.18;
     const companyCharges = subtotal * 0.02;
     const total = subtotal + gst + companyCharges;
+
+    // Dynamically load Razorpay script
+    useEffect(() => {
+        const script = document.createElement("script");
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        script.async = true;
+        document.body.appendChild(script);
+    }, []);
+
+    const handlePayment = async () => {
+        const options = {
+            key: "rzp_test_M8NKs1b3srxEmc", // Replace with your Razorpay API key
+            amount: total * 100, // Convert to paise (₹1 = 100 paise)
+            currency: "INR",
+            name: "Your Store",
+            description: "Order Payment",
+            image: {logo},
+            handler: function (response) {
+                alert(Payment Successful! Payment ID: ${response.razorpay_payment_id});
+            },
+            prefill: {
+                name: "JEEL ASHOKBHAI VAGHANI",
+                email: "jeelvaghani@gmail.com",
+                contact: "8320016609",
+            },
+            theme: {
+                color: "#3399cc",
+            },
+        };
+
+        const rzp = new window.Razorpay(options);
+        rzp.open();
+    };
 
     return (
         <div className="container mx-auto p-4">
@@ -201,17 +318,16 @@ const AddToCart = () => {
                     <p>Company Charges (2%): ${companyCharges.toFixed(2)}</p>
                     <hr className="my-2" />
                     <p className="font-bold">Total: ${total.toFixed(2)}</p>
-                    <button className="bg-green-500 text-white px-4 py-2 mt-4 rounded w-full">
+                    <button
+                        className="bg-green-500 text-white px-4 py-2 mt-4 rounded w-full"
+                        onClick={handlePayment}
+                    >
                         Proceed to Checkout
                     </button>
                 </div>
-
             </div>
         </div>
     );
 };
-
-// export default CartPage;
-
 
 export default AddToCart;
