@@ -1,5 +1,7 @@
 package com.userdata.authenticate.UserInfo;
 
+import com.userdata.VehicleType.PassengerVehicle.PassengerVehicle;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -29,6 +31,7 @@ public class User {
 
     @NotBlank(message = "Confirm Password cannot be empty!")
     private String confirm_password;
+
 
     // Default constructor
     public User() {}

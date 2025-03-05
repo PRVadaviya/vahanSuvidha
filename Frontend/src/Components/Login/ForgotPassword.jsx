@@ -1,5 +1,3 @@
-
-
 import { useState } from "react";
 
 const ForgotPassword = () => {
@@ -84,6 +82,7 @@ const ForgotPassword = () => {
         setMessage("Password reset successfully!");
         setShowResetPassword(false);
         setShowOtpField(false);
+        navigate("/Login");       //redirect to Login Page
       } else {
         setMessage(data.message || "Error resetting password.");
       }
@@ -105,7 +104,7 @@ const ForgotPassword = () => {
               <input
                 type="email"
                 className="w-full p-2 border border-gray-300 rounded mt-1"
-                placeholder="Enter your email"
+                placeholder="Enter your register email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -181,128 +180,3 @@ const ForgotPassword = () => {
 };
 
 export default ForgotPassword;
-
-
-
-
-
-
-// import { useState } from "react";
-
-// const ForgotPassword = () => {
-//   const [email, setEmail] = useState("");
-//   const [otp, setOtp] = useState("");
-//   const [message, setMessage] = useState("");
-//   const [showOtpField, setShowOtpField] = useState(false);
-
-//   const handleGetOtp = async () => {
-//     if (!email) {
-//       setMessage("Please enter a valid email address.");
-//       return;
-//     }
-
-//     try {
-//       const response = await fetch("http://localhost:9203/validate-email", {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify({ email }),
-//       });
-
-//       console.log("response is ready");
-
-//       const data = await response.json();
-//       if (response.ok) {
-//         setMessage(data.message);
-//         setShowOtpField(true);
-//       } else {
-//         setMessage(data.message || "Error sending OTP.");
-//       }
-//     } catch (error) {
-//       setMessage("Failed to send OTP. Try again.");
-//     }
-//   };
-
-//   const handleVerifyOtp = async () => {
-//     if (!otp) {
-//       setMessage("Please enter the OTP.");
-//       return;
-//     }
-
-//     try {
-//       const response = await fetch("http://localhost:9203/verify-otp", {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify({ otp }),
-//       });
-
-//       const data = await response.json();
-//       if (data.success) {
-//         setMessage("OTP verified successfully!");
-//       } else {
-//         setMessage(data.message || "Invalid OTP.");
-//       }
-//     } catch (error) {
-//       setMessage("Error verifying OTP.");
-//     }
-//   };
-
-//   return (
-//     <div className="flex items-center justify-center h-screen bg-gray-100">
-//       <div className="bg-white shadow-md rounded-lg p-6 w-96 text-center">
-//         <h2 className="text-lg font-semibold mb-4">Forgot Password</h2>
-        
-//         {/* Email Input */}
-//         <div className="mb-3 text-left">
-//           <label className="block text-sm font-medium text-gray-700">Email:</label>
-//           <input
-//             type="email"
-//             className="w-full p-2 border border-gray-300 rounded mt-1"
-//             placeholder="Enter your email"
-//             value={email}
-//             onChange={(e) => setEmail(e.target.value)}
-//           />
-//         </div>
-        
-//         {/* Get OTP Button */}
-//         <button
-//           className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-800 transition"
-//           onClick={handleGetOtp}
-//         >
-//           Get OTP
-//         </button>
-
-//         {/* OTP Input Field (Shown After Email Validation) */}
-//         {showOtpField && (
-//           <div className="mt-4 text-left">
-//             <label className="block text-sm font-medium text-gray-700">Enter OTP:</label>
-//             <input
-//               type="text"
-//               className="w-full p-2 border border-gray-300 rounded mt-1"
-//               placeholder="Enter OTP"
-//               value={otp}
-//               onChange={(e) => setOtp(e.target.value)}
-//             />
-//             <button
-//               className="w-full bg-green-600 text-white py-2 mt-3 rounded hover:bg-green-800 transition"
-//               onClick={handleVerifyOtp}
-//             >
-//               Submit OTP
-//             </button>
-//           </div>
-//         )}
-
-//         {/* Message Display */}
-//         {message && <p className="mt-3 text-sm text-red-600">{message}</p>}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ForgotPassword;
-
-
-
-
-
-
-
