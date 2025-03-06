@@ -1,4 +1,5 @@
-import Golf6 from "/Passanger_vehicles/Golf6.jpg";;
+import Golf6 from '../../../../../assets/Passanger_vehicles/Golf6.jpg';
+
 import AudiA1 from '../../../../../assets/Passanger_vehicles/AudiA1.jpg';
 import Bmw320 from '../../../../../assets/Passanger_vehicles/Bmw320.jpg';
 import Benz from '../../../../../assets/Passanger_vehicles/Benz.jpg';
