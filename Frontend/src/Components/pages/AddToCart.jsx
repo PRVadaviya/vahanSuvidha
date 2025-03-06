@@ -253,8 +253,9 @@ const AddToCart = () => {
             description: "Order Payment",
             image: {logo},
             handler: function (response) {
-                alert(`Payment Successful! Payment ID: ${response.razorpay_payment_id}`);
-            },
+    alert(`Payment Successful! Payment ID: ${response.razorpay_payment_id}`);
+},
+
             prefill: {
                 name: "JEEL ASHOKBHAI VAGHANI",
                 email: "jeelvaghani@gmail.com",
