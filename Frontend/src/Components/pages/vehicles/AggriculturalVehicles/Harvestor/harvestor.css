@@ -67,10 +67,18 @@ h1 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, transform 0.1s;
 }
 
 .book-btn:hover {
     background-color: #1f211f;
-    ;
+}
+
+.book-btn:active {
+    transform: scale(0.95); /* Slight shrink effect on click */
+}
+
+.book-btn.added {
+    background-color: #1f211f; /* Green success color */
+    cursor: not-allowed;
 }

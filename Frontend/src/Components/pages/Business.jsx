@@ -1,91 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import AddVehicle from "./AddVehicle";
+import AddEquipment from "./AddEquipment";
 
-const VehicleForm = () => {
-  const [formData, setFormData] = useState({
-    brand: "",
-    model: "",
-    year: "",
-    color: "",
-    price: "",
-  });
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
-  };
+const Business = () => {
+  const [activeForm, setActiveForm] = useState("vehicle");
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 bg-white rounded shadow-md">
-      <div className="mb-4">
-        <label className="block text-gray-700">Brand</label>
-        <input
-          type="text"
-          name="brand"
-          value={formData.brand}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
+    <div className="flex flex-col items-center min-h-screen bg-gray-100 p-6">
+      <div className="flex space-x-4 mb-6">
+        <button
+          className={`px-4 py-2 rounded ${activeForm === "vehicle" ? "bg-green-600 text-white" : "bg-gray-300"
+            }`}
+          onClick={() => setActiveForm("vehicle")}
+        >
+          Add Vehicle
+        </button>
+        <button
+          className={`px-4 py-2 rounded ${activeForm === "equipment" ? "bg-green-600 text-white" : "bg-gray-300"
+            }`}
+          onClick={() => setActiveForm("equipment")}
+        >
+          Add Equipment
+        </button>
       </div>
-      
-      <div className="mb-4">
-        <label className="block text-gray-700">Model</label>
-        <input
-          type="text"
-          name="model"
-          value={formData.model}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-      </div>
-      
-      <div className="mb-4">
-        <label className="block text-gray-700">Year</label>
-        <input
-          type="number"
-          name="year"
-          value={formData.year}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-      </div>
+      <div className="bg-white rounded-lg  w-4/5">
+        {activeForm === "vehicle" ? <AddVehicle /> : <AddEquipment />}
 
-      <div className="mb-4">
-        <label className="block text-gray-700">Color</label>
-        <input
-          type="text"
-          name="color"
-          value={formData.color}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
       </div>
-
-      <div className="mb-4">
-        <label className="block text-gray-700">Price</label>
-        <input
-          type="number"
-          name="price"
-          value={formData.price}
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-      </div>
-
-      <button
-        type="submit"
-        className="w-full bg-blue-500 text-white py-2 rounded"
-      >
-        Submit
-      </button>
-    </form>
+    </div>
   );
-};
+}
 
-export default VehicleForm;
+export default Business
