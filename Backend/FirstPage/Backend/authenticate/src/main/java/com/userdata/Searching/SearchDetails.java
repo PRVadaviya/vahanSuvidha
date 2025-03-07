@@ -9,7 +9,7 @@ public class SearchDetails {
      private String searchCity ;
      private LocalDate pickupDate ;
      private LocalDate returnDate ;
-     private String classType ;
+     private String classType ;    
 
      public SearchDetails(){
 

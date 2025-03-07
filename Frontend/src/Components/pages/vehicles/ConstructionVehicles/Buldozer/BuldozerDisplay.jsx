@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import CarData from './BulzorData'
+import React, { useEffect, useState } from "react";
+import BuldozerList from './BulzorData'
 import './buldozer.css'
 import HeaderCard from '../HeaderCard'
 import { addToCart } from "../../../../../features/AddToCart/cartSlice";
@@ -9,43 +9,49 @@ const BuldozerDisplay = () => {
 
   const dispatch = useDispatch();
   const items = useSelector((state) => state.cart); // Get cart items from Redux
+  const [buldozerData, setBuldozerData] = useState([]);
 
   useEffect(() => {
-    console.log(items);
-  }, [items]);
+    const loadBuldozers = async () => {
+      const data = await BuldozerList();
+      console.log(data);
 
-  // Function to check if a car is already in the cart
-  const isCarInCart = (car) => {
-    return items.some((item) => item.name === car.name);
+      setBuldozerData(data);
+    };
+    loadBuldozers();
+  }, []);
+
+  const isBuldozerInCart = (buldozer) => {
+    return items.some((item) => item.vehicleNumber === buldozer.vehicleNumber);
   };
 
   return (
     <div>
       <HeaderCard />
       <div className="app-container">
-        <h1>Car</h1>
+        <h1>Buldozer</h1>
         <div className="car-grid">
-          {CarData.map((car, index) => (
+          {buldozerData.map((buldozer, index) => (
             <div key={index} className="car-card">
               <div className="car-image">
-                <img src={car.img} alt={car.name} />
+                <img src={buldozer.img} alt={buldozer.vehicleName} />
               </div>
               <div className="car-details">
                 <div className="font-bold text-green-700 underline">
-                  <h3>{car.name}</h3>
+                  <h3>{buldozer.vehicleName}</h3>
                 </div>
-                <p className="car-price">${car.price} per day</p>
+                <p className="car-price">${buldozer.vehicleRentPrice} per day</p>
                 <div className="car-specs">
-                  <p>Model: {car.model}</p>
-                  <p>Doors: {car.doors}</p>
-                  <p>Fuel: {car.fuel}</p>
-                  <p>Transmission: {car.transmission}</p>
+                  <p>Model: {buldozer.vehicleName}</p>
+                  <p>Seating Capacity: {buldozer.seatingCapacity}</p>
+                  <p>Fuel: {buldozer.fuelType}</p>
+                  <p>Transmission: {buldozer.transmission}</p>
                 </div>
                 <button
-                  onClick={() => dispatch(addToCart(car))}
-                  className={`book-btn ${isCarInCart(car) ? "added" : ""}`}
+                  onClick={() => dispatch(addToCart(buldozer))}
+                  className={`book-btn ${isBuldozerInCart(buldozer) ? "added" : ""}`}
                 >
-                  {isCarInCart(car) ? "✓ Added!" : "Add To Cart"}
+                  {isBuldozerInCart(buldozer) ? "✓ Added!" : "Add To Cart"}
                 </button>
               </div>
             </div>

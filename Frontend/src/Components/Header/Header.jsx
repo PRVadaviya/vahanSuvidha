@@ -23,9 +23,9 @@ const Header = () => {
           <NavLink to="/bussiness" className={({ isActive }) => `hober:underline ${isActive ? 'text-green-500' : 'text-white'}`}>
             For Bussiness
           </NavLink>
-          <NavLink to="/booking" className={({ isActive }) => `hober:underline ${isActive ? 'text-green-500' : 'text-white'}`}>
+          {/* <NavLink to="/booking" className={({ isActive }) => `hober:underline ${isActive ? 'text-green-500' : 'text-white'}`}>
             Booking Status
-          </NavLink>
+          </NavLink> */}
 
         </nav>
 

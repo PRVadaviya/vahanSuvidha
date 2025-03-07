@@ -220,10 +220,15 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart, increaseQuantity, decreaseQuantity } from "../../features/AddToCart/cartSlice";
 import logo from "../../assets/logo.png"
+import API from "../../api";
+import { useNavigate } from "react-router-dom";
+
 
 const AddToCart = () => {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart);
+    const searchData = useSelector((state)=>state.search)
+    const navigate = useNavigate()
 
     const handleQuantityChange = (item, quantity) => {
         if (quantity > 0) {
@@ -231,7 +236,7 @@ const AddToCart = () => {
         }
     };
 
-    const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const subtotal = cartItems.reduce((sum, item) => sum + item.vehicleRentPrice * item.quantity, 0);
     const gst = subtotal * 0.18;
     const companyCharges = subtotal * 0.02;
     const total = subtotal + gst + companyCharges;
@@ -244,6 +249,39 @@ const AddToCart = () => {
         document.body.appendChild(script);
     }, []);
 
+    const afterPayment = async() => {
+
+        // const vehicleData = cartItems.map(({vehicle_id,vehicleType})=>({vehicle_id,vehicleType}))
+
+        // const sendData = [...vehicleData,searchData]
+
+        // const sendData = [...vehicleData,...searchData] 
+
+        try {
+            const response = await fetch(`${API}/vehicle/booked`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(cartItems)  // Convert array to JSON string
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to send data");
+            }
+
+            const result = await response.json();
+            console.log("Success:", result);
+        } catch (error) {
+            console.error("Error:", error);
+        }finally{
+            navigate("/")
+        }
+
+        console.log(searchData);
+        
+    }
+
     const handlePayment = async () => {
         const options = {
             key: "rzp_test_M8NKs1b3srxEmc", // Replace with your Razorpay API key
@@ -251,10 +289,8 @@ const AddToCart = () => {
             currency: "INR",
             name: "Your Store",
             description: "Order Payment",
-            image: {logo},
-            handler: function (response) {
-    alert(`Payment Successful! Payment ID: ${response.razorpay_payment_id}`);
-},
+            image: { logo },
+            handler: afterPayment,
 
             prefill: {
                 name: "JEEL ASHOKBHAI VAGHANI",
@@ -279,11 +315,11 @@ const AddToCart = () => {
                         <p>Your cart is empty.</p>
                     ) : (
                         cartItems.map((item) => (
-                            <div key={item.name} className="flex items-center border-b p-4">
-                                <img src={item.img} alt={item.name} className="w-20 h-20 mr-4 rounded" />
+                            <div key={item.vehicleName} className="flex items-center border-b p-4">
+                                <img src={item.img} alt={item.vehicleName} className="w-20 h-20 mr-4 rounded" />
                                 <div className="flex-1">
-                                    <h3 className="font-bold">{item.name}</h3>
-                                    <p className="text-gray-500">${item.price} per day</p>
+                                    <h3 className="font-bold">{item.vehicleName}</h3>
+                                    <p className="text-gray-500">${item.vehicleRentPrice} per day</p>
                                     <div className="flex items-center mt-2">
                                         <span className="mr-2">Quantity:</span>
                                         <button

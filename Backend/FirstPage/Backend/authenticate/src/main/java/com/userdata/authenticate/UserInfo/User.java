@@ -1,6 +1,6 @@
 package com.userdata.authenticate.UserInfo;
 
-import com.userdata.VehicleType.PassengerVehicle.PassengerVehicle;
+
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -13,7 +13,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @NotBlank(message = "User name cannot be empty!")
     @Size(min = 1, max = 20, message = "Name must be between 1 and 20 characters.")
@@ -37,11 +37,11 @@ public class User {
     public User() {}
 
     // Getters and Setters
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

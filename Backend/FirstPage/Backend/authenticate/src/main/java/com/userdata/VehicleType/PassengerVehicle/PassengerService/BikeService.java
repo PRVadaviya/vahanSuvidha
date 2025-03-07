@@ -14,8 +14,18 @@ public class BikeService {
      @Autowired
      private BikeRepository bikeRepository ;
 
-     public List<bike> findBikes(String country , String state , String city , int pvid)
+     public List<bike> findBikes(String country , String state , String city)
      {
-          return bikeRepository.findBikeByCountryStateCity(country, state, city, pvid);
+          return bikeRepository.findBikeByCountryStateCity(country, state, city);
+     }
+
+     public bike findBikeById(int id)
+     {
+          return bikeRepository.findById(id).get();
+     }
+
+     public List<bike> findAllBikes()
+     {
+          return bikeRepository.findAll();
      }
 }

@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
 public class bookedCar { 
@@ -16,11 +17,8 @@ public class bookedCar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bookingId;
-     
-    @OneToOne 
-    @JoinColumn(name = "booking_carId")
-    private car car;
-
+    private String vehicleType ;
+    private int vehicleId ;
     private LocalDate pickupDate;
     private LocalDate returnDate;
 
@@ -34,13 +32,21 @@ public class bookedCar {
      public void setBookingId(int bookingId) {
           this.bookingId = bookingId;
      }
-
-     public car getCar() {
-          return car;
+     
+     public String getVehicleType() {
+          return vehicleType;
      }
 
-     public void setCar(car car) {
-          this.car = car;
+     public void setVehicleType(String vehicleType) {
+          this.vehicleType = vehicleType;
+     }
+
+     public int getVehicleId() {
+          return vehicleId;
+     }
+
+     public void setVehicleId(int vehicleId) {
+          this.vehicleId = vehicleId;
      }
 
      public LocalDate getPickupDate() {

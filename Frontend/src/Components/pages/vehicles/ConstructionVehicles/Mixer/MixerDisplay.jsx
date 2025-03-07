@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import CarData from "./MixerData";
+import React, { useEffect, useState } from "react";
+import MixerList from "./MixerData";
 import './mixer.css'
 import HeaderCard from "../HeaderCard";
 import { addToCart } from "../../../../../features/AddToCart/cartSlice";
@@ -9,43 +9,50 @@ const MixerDisplay = () => {
 
   const dispatch = useDispatch();
   const items = useSelector((state) => state.cart); // Get cart items from Redux
+  const [MixerData, setMixerData] = useState([]);
 
   useEffect(() => {
-    console.log(items);
-  }, [items]);
+    const loadMixers = async () => {
+      const data = await MixerList();
+      console.log(data);
+
+      setMixerData(data);
+    };
+    loadMixers();
+  }, []);
 
   // Function to check if a car is already in the cart
-  const isCarInCart = (car) => {
-    return items.some((item) => item.name === car.name);
+  const isMixerInCart = (mixer) => {
+    return items.some((item) => item.vehicelNumber === mixer.vehicelNumber);
   };
 
   return (
     <div>
       <HeaderCard />
       <div className="app-container">
-        <h1>Car</h1>
+        <h1>Mixer</h1>
         <div className="car-grid">
-          {CarData.map((car, index) => (
+          {MixerData.map((mixer, index) => (
             <div key={index} className="car-card">
               <div className="car-image">
-                <img src={car.img} alt={car.name} />
+                <img src={mixer.img} alt={mixer.vahicleName} />
               </div>
               <div className="car-details">
                 <div className="font-bold text-green-700 underline">
-                  <h3>{car.name}</h3>
+                  <h3>{mixer.vahicleName}</h3>
                 </div>
-                <p className="car-price">${car.price} per day</p>
+                <p className="car-price">${mixer.vehicleRentPrice} per day</p>
                 <div className="car-specs">
-                  <p>Model: {car.model}</p>
-                  <p>Doors: {car.doors}</p>
-                  <p>Fuel: {car.fuel}</p>
-                  <p>Transmission: {car.transmission}</p>
+                  <p>Model: {mixer.vahicleName}</p>
+                  <p>Seating Capacity: {mixer.seatingCapacity}</p>
+                  <p>Fuel: {mixer.fuelType}</p>
+                  <p>Transmission: {mixer.transmission}</p>
                 </div>
                 <button
-                  onClick={() => dispatch(addToCart(car))}
-                  className={`book-btn ${isCarInCart(car) ? "added" : ""}`}
+                  onClick={() => dispatch(addToCart(mixer))}
+                  className={`book-btn ${isMixerInCart(mixer) ? "added" : ""}`}
                 >
-                  {isCarInCart(car) ? "✓ Added!" : "Add To Cart"}
+                  {isMixerInCart(mixer) ? "✓ Added!" : "Add To Cart"}
                 </button>
               </div>
             </div>

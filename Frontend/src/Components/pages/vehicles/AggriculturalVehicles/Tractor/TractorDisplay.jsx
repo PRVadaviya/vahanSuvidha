@@ -1,49 +1,55 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import HeaderCard from '../HeaderCard'
-import CarData from './TractorData'
+import TractorList from './TractorData'
 import { addToCart } from "../../../../../features/AddToCart/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 function TractorDisplay() {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.cart); // Get cart items from Redux
+  const [TractorData, setTractorData] = useState([]);
 
   useEffect(() => {
-    console.log(items);
-  }, [items]);
+    const loadTractors = async () => {
+      const data = await TractorList();
+      console.log(data);
 
-  // Function to check if a car is already in the cart
-  const isCarInCart = (car) => {
-    return items.some((item) => item.name === car.name);
+      setTractorData(data);
+    };
+    loadTractors();
+  }, []);
+
+  const isTractorInCart = (tractor) => {
+    return items.some((item) => item.name === tractor.name);
   };
 
   return (
     <div>
       <HeaderCard />
       <div className="app-container">
-        <h1>Car</h1>
+        <h1>Tractor</h1>
         <div className="car-grid">
-          {CarData.map((car, index) => (
+          {TractorData.map((tractor, index) => (
             <div key={index} className="car-card">
               <div className="car-image">
-                <img src={car.img} alt={car.name} />
+                <img src={tractor.img} alt={tractor.vehicleName} />
               </div>
               <div className="car-details">
                 <div className="font-bold text-green-700 underline">
-                  <h3>{car.name}</h3>
+                  <h3>{tractor.vehicleName}</h3>
                 </div>
-                <p className="car-price">${car.price} per day</p>
+                <p className="car-price">${tractor.vehicleRentPrice} per day</p>
                 <div className="car-specs">
-                  <p>Model: {car.model}</p>
-                  <p>Doors: {car.doors}</p>
-                  <p>Fuel: {car.fuel}</p>
-                  <p>Transmission: {car.transmission}</p>
+                  <p>Model: {tractor.vehicleName}</p>
+                  <p>Seating Capacity: {tractor.seatingCapacity}</p>
+                  <p>Fuel: {tractor.fuelType}</p>
+                  <p>Transmission: {tractor.transmission}</p>
                 </div>
                 <button
-                  onClick={() => dispatch(addToCart(car))}
-                  className={`book-btn ${isCarInCart(car) ? "added" : ""}`}
+                  onClick={() => dispatch(addToCart(tractor))}
+                  className={`book-btn ${isTractorInCart(tractor) ? "added" : ""}`}
                 >
-                  {isCarInCart(car) ? "✓ Added!" : "Add To Cart"}
+                  {isTractorInCart(tractor) ? "✓ Added!" : "Add To Cart"}
                 </button>
               </div>
             </div>

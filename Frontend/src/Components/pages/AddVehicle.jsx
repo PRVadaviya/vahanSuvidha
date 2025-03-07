@@ -299,6 +299,9 @@ const AddVehicle = () => {
           <label className="block text-sm font-medium">Additional Information</label>
           <input type="text" name="additionalInfo" value={formData.additionalInfo} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Add any extra details" />
 
+                {console.log(formData)}
+                
+
           {/* Submit Button */}
           <button type="submit" className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-800 transition">
             Add Vehicle

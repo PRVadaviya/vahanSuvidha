@@ -1,5 +1,8 @@
 package com.userdata.VehicleType.PassengerVehicle;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,10 +15,12 @@ public class bus {
      
      @Id
      @GeneratedValue(strategy = GenerationType.IDENTITY)
-     private int busId;
+     @Column(name = "vehicle_id")
+     private int vehicle_id;
 
      @ManyToOne
      @JoinColumn(name = "passengerVehicleId")
+     @JsonBackReference
      private PassengerVehicle passengerVehicle;
 
      private String VehicleName;
@@ -34,11 +39,11 @@ public class bus {
      private String VehicleAdditionalInfo;
      private boolean isBooked;
 
-     public int getBusId() {
-          return busId;
-     }    
-     public void setBusId(int busId) {
-          this.busId = busId;
+     public int getVehicle_id() {
+          return vehicle_id;
+     }
+     public void setVehicle_id(int carId) {
+          this.vehicle_id = carId;
      }
      public String getVehicleName() {
           return VehicleName;

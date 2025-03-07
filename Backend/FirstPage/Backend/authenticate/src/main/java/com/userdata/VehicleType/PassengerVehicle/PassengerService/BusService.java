@@ -14,9 +14,19 @@ public class BusService {
      @Autowired
      private BusRepository busRepository;
 
-     public List<bus> findCars(String country , String state , String city , int pvid)
+     public List<bus> findBuss(String country , String state , String city)
      {
-          return busRepository.findBusByCountryStateCity(country, state, city, pvid);
+          return busRepository.findBusByCountryStateCity(country, state, city);
+     }
+
+     public bus findBusById(int id)
+     {
+          return busRepository.findById(id).get();
+     }
+
+     public List<bus> findAllBuss()
+     {
+          return busRepository.findAll();
      }
 
 }

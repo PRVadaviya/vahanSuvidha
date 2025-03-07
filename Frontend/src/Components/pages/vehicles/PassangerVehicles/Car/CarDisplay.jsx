@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
-import CarData from "./CarData";
+import React, { useEffect, useState } from "react";
+import CarList from "./CarData";
+
 import './car.css'
 import HeaderCard from "../HeaderCard";
 import { addToCart } from "../../../../../features/AddToCart/cartSlice";
@@ -9,14 +10,21 @@ const CarDisplay = () => {
 
   const dispatch = useDispatch();
   const items = useSelector((state) => state.cart); // Get cart items from Redux
+  const [CarData, setCarData] = useState([]);
 
   useEffect(() => {
-    console.log(items);
-  }, [items]);
+    const loadCars = async () => {
+      const data = await CarList();
+      console.log(data);
 
-  // Function to check if a car is already in the cart
+      setCarData(data);
+    };
+    loadCars();
+  }, []);
+// 
+
   const isCarInCart = (car) => {
-    return items.some((item) => item.name === car.name);
+    return items.some((item) => item.vehicleNumber === car.vehicleNumber);
   };
 
   return (
@@ -28,17 +36,18 @@ const CarDisplay = () => {
           {CarData.map((car, index) => (
             <div key={index} className="car-card">
               <div className="car-image">
-                <img src={car.img} alt={car.name} />
+                <img src={car.img} alt={car.vehicleName} />
               </div>
               <div className="car-details">
                 <div className="font-bold text-green-700 underline">
-                  <h3>{car.name}</h3>
+                  <h3>{car.vehicleName}</h3>
                 </div>
-                <p className="car-price">${car.price} per day</p>
+                <p className="car-price">${car.vehicleRentPrice
+                } per day</p>
                 <div className="car-specs">
-                  <p>Model: {car.model}</p>
-                  <p>Doors: {car.doors}</p>
-                  <p>Fuel: {car.fuel}</p>
+                  <p>Model: {car.vehicleName}</p>
+                  <p>Seating Capacity: {car.seatingCapacity}</p>
+                  <p>Fuel: {car.fuelType}</p>
                   <p>Transmission: {car.transmission}</p>
                 </div>
                 <button

@@ -12,7 +12,9 @@ import com.userdata.VehicleType.PassengerVehicle.car;
 @Repository
 public interface CarRepository extends JpaRepository<car, Integer> {
 
-     @Query(value = "select * from car where location_country = :country AND location_state = :state AND location_city = :city AND passenger_vehicle_id = :pvid" , nativeQuery = true)
-     List<car> findCarByCountryStateCity(@Param("country") String country, @Param("state")String state,@Param("city") String city , @Param("pvid") int pvid);
+     @Query(value = "select * from car where location_country = :country AND location_state = :state AND location_city = :city AND is_booked = false" , nativeQuery = true)
+     List<car> findCarByCountryStateCity(@Param("country") String country, @Param("state")String state,@Param("city") String city);
      
 }
+
+

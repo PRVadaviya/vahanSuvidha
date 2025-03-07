@@ -24,6 +24,7 @@ public class PassengerVehicle {
      @JoinColumn(name = "OwnerVehicles")
      private User user ;
 
+     //list mapped with entity class object (there name is passengerVehicle)
      @OneToMany(mappedBy = "passengerVehicle", cascade = CascadeType.ALL)
      @JsonManagedReference
      private List<bike> bikeList;  
@@ -43,13 +44,7 @@ public class PassengerVehicle {
           this.bikeList = null;
           this.carList = null;
           this.busList = null;
-     }
-
-     public PassengerVehicle(int passengerVehicleId) {
-          this.passengerVehicleId = passengerVehicleId;
-          this.bikeList = null;
-          this.carList = null;
-          this.busList = null;
+          this.user = null ;
      }
 
      public int getPassengerVehicleId() {
@@ -61,6 +56,13 @@ public class PassengerVehicle {
           this.passengerVehicleId = passengerVehicleId;
      }
 
+     public User getUser() {
+          return user;
+     }
+
+     public void setUser(User user) {
+          this.user = user;
+     }
 
      public List<bike> getBikeList() {
           return bikeList;

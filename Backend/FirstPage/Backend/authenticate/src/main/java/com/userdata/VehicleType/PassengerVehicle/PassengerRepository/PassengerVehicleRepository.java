@@ -7,6 +7,6 @@ import com.userdata.VehicleType.PassengerVehicle.PassengerVehicle;
 
 @Repository
 public interface PassengerVehicleRepository extends JpaRepository<PassengerVehicle, Integer> {
-
+     
      
 }

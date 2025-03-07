@@ -34,11 +34,11 @@ public class Vehicle {
         this.isBooked = isBooked;
     }
 
-    public Long getId() {
+    public Long getVehicleId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setVehicleId(Long id) {
         this.id = id;
     }
 
@@ -144,4 +144,15 @@ public class Vehicle {
     public void setAdditionalInfo(String additionalInfo) {
         this.additionalInfo = additionalInfo;
     }
+
+    @Override
+    public String toString() {
+        return "Vehicle [id=" + id + ", vehicleName=" + vehicleName + ", vehicleNumber=" + vehicleNumber + ", category="
+                + category + ", type=" + type + ", country=" + country + ", state=" + state + ", city=" + city
+                + ", seatingCapacity=" + seatingCapacity + ", fuelType=" + fuelType + ", transmission=" + transmission
+                + ", numOfWheels=" + numOfWheels + ", rentPrice=" + rentPrice + ", additionalInfo=" + additionalInfo
+                + ", isBooked=" + isBooked + "]";
+    }
+
+    
 }

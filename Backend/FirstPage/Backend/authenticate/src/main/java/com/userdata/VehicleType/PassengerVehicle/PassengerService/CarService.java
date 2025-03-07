@@ -14,9 +14,19 @@ public class CarService {
      @Autowired
      private CarRepository carRepository;
 
-     public List<car> findCars(String country , String state , String city , int pvid)
+     public List<car> findCars(String country , String state , String city)
      {
-          return carRepository.findCarByCountryStateCity(country, state, city, pvid);
+          return carRepository.findCarByCountryStateCity(country, state, city);
+     }
+
+     public car findCarById(int id)
+     {
+          return carRepository.findById(id).get();
+     }
+
+     public List<car> findAllCars()
+     {
+          return carRepository.findAll();
      }
 
 }
