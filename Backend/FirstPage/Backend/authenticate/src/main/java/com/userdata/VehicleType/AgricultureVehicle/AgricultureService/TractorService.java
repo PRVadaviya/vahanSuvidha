@@ -14,9 +14,9 @@ public class TractorService {
      @Autowired
      private TractorRepository tractorRepository ;
 
-     public List<Tractor> findTractors(String country , String state , String city , int pvid)
+     public List<Tractor> findTractors(String country , String state , String city)
      {
-          return tractorRepository.findTractorByCountryStateCity(country, state, city, pvid);
+          return tractorRepository.findTractorByCountryStateCity(country, state, city);
      }
 
      public Tractor findTractorById(int id)

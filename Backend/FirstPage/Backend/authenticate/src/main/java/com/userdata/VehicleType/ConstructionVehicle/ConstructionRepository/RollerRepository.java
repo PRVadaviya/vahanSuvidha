@@ -10,7 +10,7 @@ import com.userdata.VehicleType.ConstructionVehicle.Roller;
 
 public interface RollerRepository extends JpaRepository<Roller,Integer>{
      
-     @Query(value = "select * from roller where location_country = :country AND location_state = :state AND location_city = :city AND construction_vehicle_id = :pvid" , nativeQuery = true)
-     List<Roller> findRollerByCountryStateCity(@Param("country") String country, @Param("state")String state,@Param("city") String city , @Param("pvid") int pvid);
+     @Query(value = "select * from roller where location_country = :country AND location_state = :state AND location_city = :city AND is_booked = false" , nativeQuery = true)
+     List<Roller> findRollerByCountryStateCity(@Param("country") String country, @Param("state")String state,@Param("city") String city );
      
 }

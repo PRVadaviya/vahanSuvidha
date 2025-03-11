@@ -270,15 +270,18 @@ const AddToCart = () => {
                 throw new Error("Failed to send data");
             }
 
+
             const result = await response.json();
             console.log("Success:", result);
         } catch (error) {
             console.error("Error:", error);
         }finally{
-            navigate("/")
+            console.log(cartItems);
+            
+            // navigate("/")
         }
 
-        console.log(searchData);
+        // console.log(searchData);
         
     }
 
@@ -316,11 +319,11 @@ const AddToCart = () => {
                     ) : (
                         cartItems.map((item) => (
                             <div key={item.vehicleName} className="flex items-center border-b p-4">
-                                <img src={item.img} alt={item.vehicleName} className="w-20 h-20 mr-4 rounded" />
+                                <img src={item.imageUrl} alt={item.vehicleName} className="w-20 h-20 mr-4 rounded" />
                                 <div className="flex-1">
                                     <h3 className="font-bold">{item.vehicleName}</h3>
                                     <p className="text-gray-500">${item.vehicleRentPrice} per day</p>
-                                    <div className="flex items-center mt-2">
+                                    {/* <div className="flex items-center mt-2">
                                         <span className="mr-2">Quantity:</span>
                                         <button
                                             className="px-2 py-1 border rounded bg-gray-200"
@@ -335,7 +338,7 @@ const AddToCart = () => {
                                         >
                                             +
                                         </button>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <button
                                     onClick={() => dispatch(removeFromCart(item))}

@@ -12,7 +12,7 @@ import com.userdata.VehicleType.CommercialVehicle.Truck;
 @Repository
 public interface TruckRepository extends JpaRepository<Truck, Integer> {
      
-     @Query(value = "select * from tractor where location_country = :country AND location_state = :state AND location_city = :city AND commercial_vehicle_id = :pvid" , nativeQuery = true)
-     List<Truck> findTruckByCountryStateCity(@Param("country") String country, @Param("state")String state,@Param("city") String city , @Param("pvid") int pvid);
+     @Query(value = "select * from tractor where location_country = :country AND location_state = :state AND location_city = :city AND is_booked = false" , nativeQuery = true)
+     List<Truck> findTruckByCountryStateCity(@Param("country") String country, @Param("state")String state,@Param("city") String city );
      
 }

@@ -17,6 +17,7 @@ const BikeDisplay = () => {
       console.log(data);
 
       setBikeData(data);
+
     };
     loadBikes();
   }, []);
@@ -39,7 +40,7 @@ const BikeDisplay = () => {
           {BikeData.map((bike, index) => (
             <div key={index} className="car-card">
               <div className="car-image">
-                <img src={bike.img} alt={bike.vehicleName} />
+                <img src={bike.imageUrl} alt={bike.vehicleName} />
               </div>
               <div className="car-details">
                 <div className="font-bold text-green-700 underline">

@@ -14,9 +14,9 @@ public class CementMixerService {
      @Autowired
      private CementMixerRepository cementMixerRepository ;
 
-     public List<CementMixer> findCementMixers(String country , String state , String city , int pvid)
+     public List<CementMixer> findCementMixers(String country , String state , String city)
      {
-          return cementMixerRepository.findCementMixerByCountryStateCity(country, state, city, pvid);
+          return cementMixerRepository.findCementMixerByCountryStateCity(country, state, city);
      }
 
      public CementMixer findCementMixerById(int id)

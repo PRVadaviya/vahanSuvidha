@@ -14,9 +14,9 @@ public class CargoService {
      @Autowired
      private CargoRepository cargoRepository;
 
-     public List<Cargo> findCargos(String country , String state , String city , int pvid)
+     public List<Cargo> findCargos(String country , String state , String city )
      {
-          return cargoRepository.findCargoByCountryStateCity(country, state, city, pvid);
+          return cargoRepository.findCargoByCountryStateCity(country, state, city);
      }
      
      public Cargo findCargoById(int id)

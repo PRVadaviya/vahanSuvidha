@@ -1,7 +1,21 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from '../../assets/logo.png'
+import { logout } from "../../features/Authentication/AuthSlice";
+import { useDispatch } from "react-redux";
+
+
 
 const Header = () => {
+
+  const dispatch = useDispatch()
+
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+    if (confirmLogout) {
+      dispatch(logout());
+      navigate("/login");
+    }
+  }
   return (
     <header className="bg-gray-800 text-white">
       <div className="container mx-auto px-6 flex flex-wrap justify-between items-center py-4">
@@ -37,9 +51,10 @@ const Header = () => {
           {/* <a href="#login" className="text-sm hover:underline">
             Sign In / Join
           </a> */}
-          <Link to='/Login' className="text-sm hover:underline">
+          {/* <Link to='/Login' className="text-sm hover:underline">
             Sign In / Join
-          </Link>
+          </Link> */}
+          <button onClick={handleLogout}>Logout</button>
         </div>
 
         {/* Mobile Menu */}

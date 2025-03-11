@@ -14,9 +14,9 @@ public class BulldozerService {
      @Autowired
      private BulldozerRepository bulldozerRepository ;
 
-     public List<Bulldozer> findBulldozers(String country , String state , String city , int pvid)
+     public List<Bulldozer> findBulldozers(String country , String state , String city )
      {
-          return bulldozerRepository.findBulldozerByCountryStateCity(country, state, city, pvid);
+          return bulldozerRepository.findBulldozerByCountryStateCity(country, state, city);
      }
 
      public Bulldozer findBulldozerById(int id)

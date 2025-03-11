@@ -12,8 +12,8 @@ import com.userdata.VehicleType.CommercialVehicle.Cargo;
 @Repository
 public interface CargoRepository extends JpaRepository<Cargo, Integer> {
      
-     @Query(value = "select * from cargo where location_country = :country AND location_state = :state AND location_city = :city AND commercial_vehicle_id = :pvid" , nativeQuery = true)
-     List<Cargo> findCargoByCountryStateCity(@Param("country") String country, @Param("state")String state,@Param("city") String city , @Param("pvid") int pvid);
+     @Query(value = "select * from cargo where location_country = :country AND location_state = :state AND location_city = :city AND is_booked = false" , nativeQuery = true)
+     List<Cargo> findCargoByCountryStateCity(@Param("country") String country, @Param("state")String state,@Param("city") String city );
      
 
 }

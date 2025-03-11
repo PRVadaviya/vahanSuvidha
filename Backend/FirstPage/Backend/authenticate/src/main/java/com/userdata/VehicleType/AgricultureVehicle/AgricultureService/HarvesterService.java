@@ -15,9 +15,9 @@ public class HarvesterService {
      @Autowired
      private HarvesterRepository harvesterRepository;
 
-     public List<Harvester> findHarvesters(String country , String state , String city , int pvid)
+     public List<Harvester> findHarvesters(String country , String state , String city)
      {
-          return harvesterRepository.findHarvesterByCountryStateCity(country, state, city, pvid);
+          return harvesterRepository.findHarvesterByCountryStateCity(country, state, city);
      }
 
      public Harvester findHarvesterById(int id)

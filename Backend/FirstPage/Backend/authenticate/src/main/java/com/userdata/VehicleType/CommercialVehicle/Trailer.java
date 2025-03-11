@@ -38,7 +38,8 @@ public class Trailer {
      private double VehicleRentPrice;
      private String VehicleAdditionalInfo;
      private boolean isBooked;
-     
+     private String imageUrl ;
+
      public int getVehicle_id() {
           return vehicle_id;
      }
@@ -129,5 +130,10 @@ public class Trailer {
      public void setBooked(boolean isBooked) {
           this.isBooked = isBooked;
      }
-
+     public String getImageUrl() {
+          return imageUrl;
+     }
+     public void setImageUrl(String imageUrl) {
+          this.imageUrl = imageUrl;
+     }
 }

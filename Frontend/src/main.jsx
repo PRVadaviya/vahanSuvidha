@@ -48,71 +48,77 @@ import Equipments from './Components/pages/equipment/Equipments.jsx'
 import { Provider } from 'react-redux'
 import store from './store.js'
 import AddToCart from './Components/pages/AddToCart.jsx'
+import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<App />}>
-        <Route path="" element={<Reservation />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/Forgotpassword" element={<ForgotPassword />} />
-        <Route path="vehicles" element={<VehicleLayout />}>
-          <Route index element={<Vehicles />} /> {/* Default vehicles page */}
-          <Route path="passenger" element={<PassengerVehicles />} />
-          <Route path="passenger" element={<PassangerLayout />}>
-            <Route index element={<CarDisplay />} /> {/* Default route */}
-            <Route path="car" element={<CarDisplay />} />
-            <Route path="bus" element={<BusDisplay />} />
-            <Route path="bike" element={<BikeDisplay />} />
-          </Route>
-          <Route path="aggricultural" element={<AggriculturalLayout />} >
-            <Route index element={<HarvestorDisplay />} />
-            <Route path='tractor' element={<TractorDisplay />} />
-          </Route>
-          <Route path="commercial" element={<CommercialLayout />} >
-            <Route index element={<TrailerDisplay />} />
-            <Route path='truck' element={<TruckDisplay />} />
-          </Route>
-          <Route path="construction" element={<ConstructionLayout />} >
-            <Route index element={<BuldozerDisplay />} />
-            <Route path='buldozer' element={<BuldozerDisplay />} />
 
-            <Route path="mixer" element={<MixerDisplay />} />
-            <Route path="roller" element={<RollerDisplay />} />
-          </Route>
-        </Route>
-        <Route path="equipment" element={<EquipmentLayout />} >
-          <Route index element={<Equipments />} /> {/* Default vehicles page */}
-          <Route path="passenger" element={<Equipments />} />
-          <Route path='aggricultural' element={<EquipmentLayout />} >
-            <Route index element={<PlowDisplay />} />
-            <Route path='rotavator' element={<RotavatorDisplay />} />
-            <Route path='thresher' element={<ThresherDisplay />} />
-            <Route path='trolly' element={<TrollyDisplay />} />
-          </Route>
-          <Route path='construction' element={<ConstructionEquipmentLayout />} >
-            <Route index element={<ExcavatorBucketDisplay />} />
-            <Route path='hydrolic-breaker' element={<HydrolicBreakerDisplay />} />
-            <Route path='road-sweeper' element={<RoadSweeperDisplay />} />
-          </Route>
-          <Route path='medicalequipment' element={<MedicalEquipmentLayout />} >
-            <Route index element={<ChairDisplay />} />
-            <Route path='walker' element={<WalkerDisplay />} />
-          </Route>
-          <Route path='transportationEquipment' element={<TransportationEquipmentLayout />} >
-            <Route index element={<ShippingContainersDisplay />} />
-            <Route path='waterTankor' element={<WaterTankorDisplay />} />
-          </Route>
-        </Route>
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/Login" element={<Login />} />
+      <Route path="/Forgotpassword" element={<ForgotPassword />} />
 
-        <Route path="bussiness" element={<Business />} />
-        <Route path="booking" element={<Booking />} />
-        <Route path='addtocart' element={<AddToCart/>}  />
+      <Route element={<ProtectedRoute />}>
+
+        <Route path="/" element={<App />}>
+          <Route path="" element={<Reservation />} />
+          <Route path="vehicles" element={<VehicleLayout />}>
+            <Route index element={<Vehicles />} /> {/* Default vehicles page */}
+            <Route path="passenger" element={<PassengerVehicles />} />
+            <Route path="passenger" element={<PassangerLayout />}>
+              <Route index element={<CarDisplay />} /> {/* Default route */}
+              <Route path="car" element={<CarDisplay />} />
+              <Route path="bus" element={<BusDisplay />} />
+              <Route path="bike" element={<BikeDisplay />} />
+            </Route>
+            <Route path="aggricultural" element={<AggriculturalLayout />} >
+              <Route index element={<HarvestorDisplay />} />
+              <Route path='tractor' element={<TractorDisplay />} />
+            </Route>
+            <Route path="commercial" element={<CommercialLayout />} >
+              <Route index element={<TrailerDisplay />} />
+              <Route path='truck' element={<TruckDisplay />} />
+            </Route>
+            <Route path="construction" element={<ConstructionLayout />} >
+              <Route index element={<BuldozerDisplay />} />
+              <Route path='buldozer' element={<BuldozerDisplay />} />
+
+              <Route path="mixer" element={<MixerDisplay />} />
+              <Route path="roller" element={<RollerDisplay />} />
+            </Route>
+          </Route>
+          <Route path="equipment" element={<EquipmentLayout />} >
+            <Route index element={<Equipments />} /> {/* Default vehicles page */}
+            <Route path="passenger" element={<Equipments />} />
+            <Route path='aggricultural' element={<EquipmentLayout />} >
+              <Route index element={<PlowDisplay />} />
+              <Route path='rotavator' element={<RotavatorDisplay />} />
+              <Route path='thresher' element={<ThresherDisplay />} />
+              <Route path='trolly' element={<TrollyDisplay />} />
+            </Route>
+            <Route path='construction' element={<ConstructionEquipmentLayout />} >
+              <Route index element={<ExcavatorBucketDisplay />} />
+              <Route path='hydrolic-breaker' element={<HydrolicBreakerDisplay />} />
+              <Route path='road-sweeper' element={<RoadSweeperDisplay />} />
+            </Route>
+            <Route path='medicalequipment' element={<MedicalEquipmentLayout />} >
+              <Route index element={<ChairDisplay />} />
+              <Route path='walker' element={<WalkerDisplay />} />
+            </Route>
+            <Route path='transportationEquipment' element={<TransportationEquipmentLayout />} >
+              <Route index element={<ShippingContainersDisplay />} />
+              <Route path='waterTankor' element={<WaterTankorDisplay />} />
+            </Route>
+          </Route>
+
+          <Route path="bussiness" element={<Business />} />
+          <Route path="booking" element={<Booking />} />
+          <Route path='addtocart' element={<AddToCart />} />
+        </Route>
+        <Route path="about" element={<AboutUs />} />
+        <Route path="privacypolicy" element={<PrivacyPolicy />} />
+        <Route path="termscondition" element={<TremsCondition />} />
       </Route>
-      <Route path="about" element={<AboutUs />} />
-      <Route path="privacypolicy" element={<PrivacyPolicy />} />
-      <Route path="termscondition" element={<TremsCondition />} />
     </>
   )
 );

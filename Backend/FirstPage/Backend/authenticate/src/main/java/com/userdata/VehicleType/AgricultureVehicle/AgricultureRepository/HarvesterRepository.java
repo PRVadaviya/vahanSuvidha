@@ -13,7 +13,7 @@ import com.userdata.VehicleType.AgricultureVehicle.Harvester;
 @Repository
 public interface HarvesterRepository extends JpaRepository<Harvester,Integer>{
 
-     @Query(value = "select * from harvester where location_country = :country AND location_state = :state AND location_city = :city AND agriculture_vehicle_id = :pvid" , nativeQuery = true)
-     List<Harvester> findHarvesterByCountryStateCity(@Param("country") String country, @Param("state")String state,@Param("city") String city , @Param("pvid") int pvid);
+     @Query(value = "select * from harvester where location_country = :country AND location_state = :state AND location_city = :city AND is_booked = false" , nativeQuery = true)
+     List<Harvester> findHarvesterByCountryStateCity(@Param("country") String country, @Param("state")String state,@Param("city") String city );
      
 }

@@ -32,7 +32,7 @@ function TruckDisplay() {
           {TruckData.map((truck, index) => (
             <div key={index} className="car-card">
               <div className="car-image">
-                <img src={truck.img} alt={truck.vehicleName} />
+                <img src={truck.imageUrl} alt={truck.vehicleName} />
               </div>
               <div className="car-details">
                 <div className="font-bold text-green-700 underline">

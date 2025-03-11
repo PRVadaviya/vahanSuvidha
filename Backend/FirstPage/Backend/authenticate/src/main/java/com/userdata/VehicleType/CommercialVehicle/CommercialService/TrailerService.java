@@ -14,9 +14,9 @@ public class TrailerService {
      @Autowired
      private TrailerRepository trailerRepository;
 
-     public List<Trailer> findTrailers(String country , String state , String city , int pvid)
+     public List<Trailer> findTrailers(String country , String state , String city )
      {
-          return trailerRepository.findTrailerByCountryStateCity(country, state, city, pvid);
+          return trailerRepository.findTrailerByCountryStateCity(country, state, city);
      }
 
      public Trailer findTrailerById(int id)

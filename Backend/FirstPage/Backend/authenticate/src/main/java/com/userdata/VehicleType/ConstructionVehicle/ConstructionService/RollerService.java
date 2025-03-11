@@ -14,9 +14,9 @@ public class RollerService {
      @Autowired
      private RollerRepository rollerRepository ;
 
-     public List<Roller> findRollers(String country , String state , String city , int pvid)
+     public List<Roller> findRollers(String country , String state , String city)
      {
-          return rollerRepository.findRollerByCountryStateCity(country, state, city, pvid);
+          return rollerRepository.findRollerByCountryStateCity(country, state, city);
      }
 
      public Roller findRollerById(int id)

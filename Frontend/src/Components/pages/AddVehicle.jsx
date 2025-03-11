@@ -5,7 +5,7 @@ const AddVehicle = () => {
     vehicleName: "",
     vehicleNumber: "",
     category: "",
-    type: "",
+    vehicleType: "",
     country: "",
     state: "",
     city: "",
@@ -15,6 +15,7 @@ const AddVehicle = () => {
     numOfWheels: "",
     rentPrice: "",
     additionalInfo: "",
+    imageUrl:""
   });
 
   const [vehicleTypes, setVehicleTypes] = useState([]);
@@ -60,15 +61,41 @@ const AddVehicle = () => {
   }, [formData.state]);
 
   const handleChange = (e) => {
+    console.log('Debugging : Before Change ',formData);
+    
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    console.log('Debugging :  After Change ',formData);
+    
   };
+
+  
+  const imagehandleChange = async (e) => {
+    const file = e.target.files[0];
+
+    const data = new FormData()
+    data.append("file",file)
+    data.append("upload_preset","vahanSuvidha")
+    data.append("cloud_name","dj7coygar")
+
+    const res = await fetch("https://api.cloudinary.com/v1_1/dj7coygar/image/upload",{
+      method:"POST",
+      body:data
+    })
+
+    const url = await res.json()
+
+    setFormData({ ...formData, imageUrl: url.secure_url});
+
+    console.log('After setting image ',formData);
+    
+    
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(formData);
     try {
-
-
       const response = await fetch("http://localhost:9203/vehicle/addvehicle", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -85,7 +112,7 @@ const AddVehicle = () => {
           vehicleName: "",
           vehicleNumber: "",
           category: "",
-          type: "",
+          vehicleType: "",
           country: "",
           state: "",
           city: "",
@@ -95,6 +122,7 @@ const AddVehicle = () => {
           numOfWheels: "",
           rentPrice: "",
           additionalInfo: "",
+          imageUrl:""
         });
       } else {
         alert(data.message || "Failed to add vehicle.");
@@ -161,8 +189,8 @@ const AddVehicle = () => {
             <div>
               <label className="block text-sm font-medium">Type</label>
               <select
-                name="type"
-                value={formData.type}
+                name="vehicleType"
+                value={formData.vehicleType}
                 onChange={handleChange}
                 required
                 className="w-full p-2 border rounded"
@@ -299,8 +327,9 @@ const AddVehicle = () => {
           <label className="block text-sm font-medium">Additional Information</label>
           <input type="text" name="additionalInfo" value={formData.additionalInfo} onChange={handleChange} className="w-full p-2 border rounded" placeholder="Add any extra details" />
 
-                {console.log(formData)}
+          {console.log(formData)}
                 
+          <input type="file" name="imageUrl" onChange={imagehandleChange} />
 
           {/* Submit Button */}
           <button type="submit" className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-800 transition">

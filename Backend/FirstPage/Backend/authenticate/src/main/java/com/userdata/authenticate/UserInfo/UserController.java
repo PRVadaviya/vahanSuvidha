@@ -54,6 +54,8 @@ import com.userdata.authenticate.UserInfo.VehicleManage.Vehicle;
 import com.userdata.authenticate.UserInfo.VehicleManage.VehicleService;
 
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @Controller
@@ -125,11 +127,11 @@ public class UserController {
     @Autowired
     private CarService findVehicleService;
 
-    private String locationCity = "Surat" ;
-    private String locationState = "Gujarat"  ;
-    private String locationCountry = "India" ;
-    private LocalDate pickupDate = LocalDate.of(2024, 3, 7);
-    private LocalDate returnDate = LocalDate.of(2024, 3, 5);
+    private String locationCity ="";
+    private String locationState ="" ;
+    private String locationCountry ="";
+    private LocalDate pickupDate ;
+    private LocalDate returnDate ;
    
     @GetMapping("/test")
     public String testPage() {
@@ -165,7 +167,7 @@ public class UserController {
 
     @PostMapping("/User/register")
     @ResponseBody
-    public ResponseEntity<String> submitForm(@Valid @RequestBody User user) {
+    public ResponseEntity<String> submitForm(@RequestBody User user) {
         System.out.println("Received User Data: " + user);
 
         // Save user to the database
@@ -208,18 +210,21 @@ public class UserController {
       
         Map<String, String> response = new HashMap<>();
        System.out.println(vehicle);
+       System.out.println("Received Vehicle Data: " + vehicle); // ✅ Debugging
+    System.out.println("Category: " + vehicle.getCategory());
+
         if(vehicle.getCategory().equals("passenger_vehicle")){
 
             PassengerVehicle passengerVehicle1 = new PassengerVehicle();
             //User user1 = new User() ;
 
-            if(vehicle.getType().equals("Car")){
+            if(vehicle.getVehicleType().equals("Car")){
 
                 car car1 = new car();
                 //vehicle Info
                 car1.setVehicleName(vehicle.getVehicleName());
                 car1.setVehicleNumber(vehicle.getVehicleNumber());
-                car1.setVehicleType(vehicle.getType());
+                car1.setVehicleType(vehicle.getVehicleType());
                 //location
                 car1.setLocationCity(vehicle.getCity());
                 car1.setLocationState(vehicle.getState());
@@ -232,7 +237,7 @@ public class UserController {
                 car1.setVehicleRentPrice(vehicle.getRentPrice());
                 car1.setVehicleAdditionalInfo(vehicle.getAdditionalInfo()); 
                 car1.setBooked(false);
-
+                car1.setImageUrl(vehicle.getImageUrl());
                 //It's set passenger vehicle is car type
                 passengerVehicle1.setPassengerVehicleId(102);
                 //user1.setId(1);
@@ -243,13 +248,13 @@ public class UserController {
                 carList.add(car1);
                 passengerVehicle1.setCarList(carList);
                 
-            }else if(vehicle.getType().equals("Bike"))
+            }else if(vehicle.getVehicleType().equals("Bike"))
             {
                 bike bike1 = new bike();
  
                 bike1.setVehicleName(vehicle.getVehicleName());
                 bike1.setVehicleNumber(vehicle.getVehicleNumber());
-                bike1.setVehicleType(vehicle.getType());
+                bike1.setVehicleType(vehicle.getVehicleType());
     
                 bike1.setLocationCity(vehicle.getCity());
                 bike1.setLocationState(vehicle.getState());
@@ -262,7 +267,7 @@ public class UserController {
                 bike1.setVehicleRentPrice(vehicle.getRentPrice());
                 bike1.setVehicleAdditionalInfo(vehicle.getAdditionalInfo()); 
                 bike1.setBooked(false);
-                
+                bike1.setImageUrl(vehicle.getImageUrl());
                 //It's set passenger vehicle is bike type
                 passengerVehicle1.setPassengerVehicleId(101);
                 bike1.setPassengerVehicle(passengerVehicle1);
@@ -271,13 +276,13 @@ public class UserController {
                 bikeList.add(bike1);
                 passengerVehicle1.setBikeList(bikeList);
 
-            }else if(vehicle.getType().equals("Bus"))
+            }else if(vehicle.getVehicleType().equals("Bus"))
             {
                 bus bus1 = new bus();
                 
                 bus1.setVehicleName(vehicle.getVehicleName());
                 bus1.setVehicleNumber(vehicle.getVehicleNumber());
-                bus1.setVehicleType(vehicle.getType());
+                bus1.setVehicleType(vehicle.getVehicleType());
 
                 bus1.setLocationCity(vehicle.getCity());
                 bus1.setLocationState(vehicle.getState());
@@ -290,7 +295,7 @@ public class UserController {
                 bus1.setVehicleRentPrice(vehicle.getRentPrice());
                 bus1.setVehicleAdditionalInfo(vehicle.getAdditionalInfo()); 
                 bus1.setBooked(false);
-
+                bus1.setImageUrl(vehicle.getImageUrl());
                 //It's set passenger vehicle is bus type
                 passengerVehicle1.setPassengerVehicleId(103);
                 bus1.setPassengerVehicle(passengerVehicle1);
@@ -316,17 +321,17 @@ public class UserController {
             }
 
 
-        }else if(vehicle.getCategory().equals("agriculture_vehicle"))
+        }else if("agriculture_vehicle".equals(vehicle.getCategory()))
         {
             AgricultureVehicle agricultureVehicle1 = new AgricultureVehicle();
 
-            if(vehicle.getType().equals("Tractor")){
+            if(vehicle.getVehicleType().equals("Tractor")){
             
                 Tractor tractor1 = new Tractor() ;
 
                 tractor1.setVehicleName(vehicle.getVehicleName());
                 tractor1.setVehicleNumber(vehicle.getVehicleNumber());
-                tractor1.setVehicleType(vehicle.getType());
+                tractor1.setVehicleType(vehicle.getVehicleType());
 
                 tractor1.setLocationCity(vehicle.getCity());
                 tractor1.setLocationState(vehicle.getState());
@@ -339,7 +344,7 @@ public class UserController {
                 tractor1.setVehicleRentPrice(vehicle.getRentPrice());
                 tractor1.setVehicleAdditionalInfo(vehicle.getAdditionalInfo()); 
                 tractor1.setBooked(false);
-
+                tractor1.setImageUrl(vehicle.getImageUrl());
                 //It's set agriculture vehicle is tractor type
                 agricultureVehicle1.setAgricultureVehicleId(201);
                 tractor1.setAgricultureVehicle(agricultureVehicle1);
@@ -348,13 +353,13 @@ public class UserController {
                 tractorList.add(tractor1);
                 agricultureVehicle1.setTractorList(tractorList);
 
-            }else if(vehicle.getType().equals("Harvester")){
+            }else if(vehicle.getVehicleType().equals("Harvester")){
 
                 Harvester harvester1 = new Harvester() ;
 
                 harvester1.setVehicleName(vehicle.getVehicleName());
                 harvester1.setVehicleNumber(vehicle.getVehicleNumber());
-                harvester1.setVehicleType(vehicle.getType());
+                harvester1.setVehicleType(vehicle.getVehicleType());
 
                 harvester1.setLocationCity(vehicle.getCity());
                 harvester1.setLocationState(vehicle.getState());
@@ -367,7 +372,7 @@ public class UserController {
                 harvester1.setVehicleRentPrice(vehicle.getRentPrice());
                 harvester1.setVehicleAdditionalInfo(vehicle.getAdditionalInfo()); 
                 harvester1.setBooked(false);
-
+                harvester1.setImageUrl(vehicle.getImageUrl());
                 //It's set agriculture vehicle is harvester type
                 agricultureVehicle1.setAgricultureVehicleId(202);
                 harvester1.setAgricultureVehicle(agricultureVehicle1);
@@ -397,13 +402,13 @@ public class UserController {
         {
             ConstructionVehicle constructionVehicle1 = new ConstructionVehicle() ;
 
-            if(vehicle.getType().equals("Bulldozer")){
+            if(vehicle.getVehicleType().equals("Bulldozer")){
             
                 Bulldozer bulldozer1 = new Bulldozer() ;
 
                 bulldozer1.setVehicleName(vehicle.getVehicleName());
                 bulldozer1.setVehicleNumber(vehicle.getVehicleNumber());
-                bulldozer1.setVehicleType(vehicle.getType());
+                bulldozer1.setVehicleType(vehicle.getVehicleType());
 
                 bulldozer1.setLocationCity(vehicle.getCity());
                 bulldozer1.setLocationState(vehicle.getState());
@@ -416,7 +421,7 @@ public class UserController {
                 bulldozer1.setVehicleRentPrice(vehicle.getRentPrice());
                 bulldozer1.setVehicleAdditionalInfo(vehicle.getAdditionalInfo()); 
                 bulldozer1.setBooked(false);
-
+                bulldozer1.setImageUrl(vehicle.getImageUrl());
                 //It's set construction vehicle is bulldozer type
                 constructionVehicle1.setConstructionVehicleId(301);
                 bulldozer1.setConstructionVehicle(constructionVehicle1);
@@ -426,13 +431,13 @@ public class UserController {
                 constructionVehicle1.setBulldozerList(bulldozerList);
 
 
-            }else if(vehicle.getType().equals("Roller")){
+            }else if(vehicle.getVehicleType().equals("Roller")){
 
                 Roller roller1 =new Roller() ;
 
                 roller1.setVehicleName(vehicle.getVehicleName());
                 roller1.setVehicleNumber(vehicle.getVehicleNumber());
-                roller1.setVehicleType(vehicle.getType());
+                roller1.setVehicleType(vehicle.getVehicleType());
 
                 roller1.setLocationCity(vehicle.getCity());
                 roller1.setLocationState(vehicle.getState());
@@ -445,7 +450,7 @@ public class UserController {
                 roller1.setVehicleRentPrice(vehicle.getRentPrice());
                 roller1.setVehicleAdditionalInfo(vehicle.getAdditionalInfo()); 
                 roller1.setBooked(false);
-
+                roller1.setImageUrl(vehicle.getImageUrl());
                 //It's set construction vehicle is Roller type
                 constructionVehicle1.setConstructionVehicleId(302);
                 roller1.setConstructionVehicle(constructionVehicle1);
@@ -456,13 +461,13 @@ public class UserController {
 
 
 
-            }else if(vehicle.getType().equals("Cement Mixer")){
+            }else if(vehicle.getVehicleType().equals("Cement Mixer")){
 
                 CementMixer cementMixer1 = new CementMixer() ;
 
                 cementMixer1.setVehicleName(vehicle.getVehicleName());
                 cementMixer1.setVehicleNumber(vehicle.getVehicleNumber());
-                cementMixer1.setVehicleType(vehicle.getType());
+                cementMixer1.setVehicleType(vehicle.getVehicleType());
 
                 cementMixer1.setLocationCity(vehicle.getCity());
                 cementMixer1.setLocationState(vehicle.getState());
@@ -475,7 +480,7 @@ public class UserController {
                 cementMixer1.setVehicleRentPrice(vehicle.getRentPrice());
                 cementMixer1.setVehicleAdditionalInfo(vehicle.getAdditionalInfo()); 
                 cementMixer1.setBooked(false);
-
+                cementMixer1.setImageUrl(vehicle.getImageUrl());
                 //It's set construction vehicle is CementMixer type
                 constructionVehicle1.setConstructionVehicleId(302);
                 cementMixer1.setConstructionVehicle(constructionVehicle1);
@@ -500,17 +505,17 @@ public class UserController {
             }
 
 
-        }else if(vehicle.getCategory().equals("commercial_vehicle"))
+        }else if("commercial_vehicle".equals(vehicle.getCategory()))
         {
             CommercialVehicle commercialVehicle1 = new CommercialVehicle() ;
 
-            if(vehicle.getType().equals("Truck")){
+            if(vehicle.getVehicleType().equals("Truck")){
             
                 Truck truck1 = new Truck() ;
 
                 truck1.setVehicleName(vehicle.getVehicleName());
                 truck1.setVehicleNumber(vehicle.getVehicleNumber());
-                truck1.setVehicleType(vehicle.getType());
+                truck1.setVehicleType(vehicle.getVehicleType());
 
                 truck1.setLocationCity(vehicle.getCity());
                 truck1.setLocationState(vehicle.getState());
@@ -523,7 +528,7 @@ public class UserController {
                 truck1.setVehicleRentPrice(vehicle.getRentPrice());
                 truck1.setVehicleAdditionalInfo(vehicle.getAdditionalInfo()); 
                 truck1.setBooked(false);
-
+                truck1.setImageUrl(vehicle.getImageUrl());
                 //It's set commercial vehicle is truck type
                 commercialVehicle1.setCommercialVehicleId(401);
                 truck1.setCommercialVehicle(commercialVehicle1);
@@ -532,13 +537,13 @@ public class UserController {
                 truckList.add(truck1);
                 commercialVehicle1.setTruckList(truckList);
 
-            }else if(vehicle.getType().equals("Cargo")){
+            }else if(vehicle.getVehicleType().equals("Cargo")){
 
                 Cargo cargo1 = new Cargo() ;
 
                 cargo1.setVehicleName(vehicle.getVehicleName());
                 cargo1.setVehicleNumber(vehicle.getVehicleNumber());
-                cargo1.setVehicleType(vehicle.getType());
+                cargo1.setVehicleType(vehicle.getVehicleType());
 
                 cargo1.setLocationCity(vehicle.getCity());
                 cargo1.setLocationState(vehicle.getState());
@@ -551,7 +556,7 @@ public class UserController {
                 cargo1.setVehicleRentPrice(vehicle.getRentPrice());
                 cargo1.setVehicleAdditionalInfo(vehicle.getAdditionalInfo()); 
                 cargo1.setBooked(false);
-
+                cargo1.setImageUrl(vehicle.getImageUrl());
                 //It's set commercial vehicle is cargo type
                 commercialVehicle1.setCommercialVehicleId(402);
                 cargo1.setCommercialVehicle(commercialVehicle1);
@@ -560,13 +565,13 @@ public class UserController {
                 cargoList.add(cargo1);
                 commercialVehicle1.setCargoList(cargoList);
 
-            }else if(vehicle.getType().equals("Trailers")){
+            }else if(vehicle.getVehicleType().equals("Trailers")){
 
                 Trailer trailer1 = new Trailer() ;
 
                 trailer1.setVehicleName(vehicle.getVehicleName());
                 trailer1.setVehicleNumber(vehicle.getVehicleNumber());
-                trailer1.setVehicleType(vehicle.getType());
+                trailer1.setVehicleType(vehicle.getVehicleType());
 
                 trailer1.setLocationCity(vehicle.getCity());
                 trailer1.setLocationState(vehicle.getState());
@@ -579,7 +584,7 @@ public class UserController {
                 trailer1.setVehicleRentPrice(vehicle.getRentPrice());
                 trailer1.setVehicleAdditionalInfo(vehicle.getAdditionalInfo()); 
                 trailer1.setBooked(false);
-
+                trailer1.setImageUrl(vehicle.getImageUrl());
                 //It's set commercial vehicle is trailer type
                 commercialVehicle1.setCommercialVehicleId(403);
                 trailer1.setCommercialVehicle(commercialVehicle1);
@@ -587,7 +592,6 @@ public class UserController {
                 List<Trailer> trailerList = new ArrayList<Trailer>();
                 trailerList.add(trailer1);
                 commercialVehicle1.setTrailerList(trailerList);
-
             }
 
             try 
@@ -611,184 +615,294 @@ public class UserController {
 
     @PostMapping("/vehicle/booked")
     @ResponseBody
-    public ResponseEntity<Map<String, String>> bookedVehicle(@RequestBody Vehicle bookedCar)
+    public ResponseEntity<Map<String, String>> bookedVehicle(@RequestBody List<Vehicle> bookedCar)
     {
         Map<String, String> response = new HashMap<>();
+        bookedCar bookedVehicle = new bookedCar() ;
 
-        //int bookedVehicleId = bookedCar.getVehicle_Id();
-        String bookedVehicleType = bookedCar.getType();
+        int bookedVehicleId = bookedCar.get(0).getVehicle_id();
+        System.out.println("---------------" + bookedCar + "-------------------");
+        String bookedVehicleType = bookedCar.get(0).getVehicleType();
 
-        if(bookedVehicleType.equals("car")){
+        if(bookedVehicleType.equals("Car"))
+        {
+            car car1 = carService.findCarById(bookedVehicleId);
+            if(car1 != null){
 
-            car car1 ;//= carService.findCarById(bookedVehicleId);
-
-           if(false){
-           //     car1.setBooked(true);
-
-                //bookedCarService.saveVehicle(bookedCar);
+                //  now this vehicle is booked
+                car1.setBooked(true);
                 
+                // set booked vehicle details
+                bookedVehicle.setPickupDate(pickupDate);
+                bookedVehicle.setReturnDate(returnDate);
+                bookedVehicle.setVehicleId(bookedVehicleId);
+                bookedVehicle.setVehicleType(bookedVehicleType);
+                
+                bookedCarService.saveVehicle(bookedVehicle);
+                    
                 response.put("message", "Car booked successfully!");
+                return ResponseEntity.ok(response);
+
+            }
+            else{
+                response.put("message", "Vehicle not found!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        
+        }
+        else if(bookedVehicleType.equals("Bike")){
+
+            bike bike1 = bikeService.findBikeById(bookedVehicleId);
+
+            if(bike1 != null)
+            {
+                bike1.setBooked(true);
+
+                // set booked vehicle details
+                bookedVehicle.setPickupDate(pickupDate);
+                bookedVehicle.setReturnDate(returnDate);
+                bookedVehicle.setVehicleId(bookedVehicleId);
+                bookedVehicle.setVehicleType(bookedVehicleType);
+
+                bookedCarService.saveVehicle(bookedVehicle);
+
+                response.put("message", "Bike booked successfully!");
                 return ResponseEntity.ok(response);
             }else{
                 response.put("message", "Vehicle not found!");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-            }}
-        
-            response.put("message", "Vehicle not found!");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);}
-        // }
-        // else if(bookedVehicleType.equals("bike")){
+            }
+        }
+        else if(bookedVehicleType.equals("Bus")){
 
-        //     bike bike1 = bikeService.findBikeById(bookedVehicleId);
+            bus bus1 = busService.findBusById(bookedVehicleId);
 
-        //     if(bike1 != null){
-        //         bike1.setBooked(true);
-        //         bookedCarService.saveVehicle(bookedCar);
-        //         response.put("message", "Bike booked successfully!");
-        //         return ResponseEntity.ok(response);
-        //     }else{
-        //         response.put("message", "Vehicle not found!");
-        //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        //     }
-        // }
-        // else if(bookedVehicleType.equals("bus")){
+            if(bus1 != null)
+            {
+                bus1.setBooked(true);
 
-        //     bus bus1 = busService.findBusById(bookedVehicleId);
+                // set booked vehicle details
+                bookedVehicle.setPickupDate(pickupDate);
+                bookedVehicle.setReturnDate(returnDate);
+                bookedVehicle.setVehicleId(bookedVehicleId);
+                bookedVehicle.setVehicleType(bookedVehicleType);
 
-        //     if(bus1 != null){
-        //         bus1.setBooked(true);
-        //         bookedCarService.saveVehicle(bookedCar);
-        //         response.put("message", "Bus booked successfully!");
-        //         return ResponseEntity.ok(response);
-        //     }else{
-        //         response.put("message", "Vehicle not found!");
-        //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        //     }
-        // }
-        // else if(bookedVehicleType.equals("tractor")){
+                bookedCarService.saveVehicle(bookedVehicle);
 
-        //     Tractor tractor1 = tractorService.findTractorById(bookedVehicleId);
+                response.put("message", "Bus booked successfully!");
+                return ResponseEntity.ok(response);
+            }else{
+                response.put("message", "Vehicle not found!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        }
+        else if(bookedVehicleType.equals("tractor")){
 
-        //     if(tractor1 != null){
-        //         tractor1.setBooked(true);
-        //         bookedCarService.saveVehicle(bookedCar);
-        //         response.put("message", "Tractor booked successfully!");
-        //         return ResponseEntity.ok(response);
-        //     }else{
-        //         response.put("message", "Vehicle not found!");
-        //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        //     }
-        // }
-        // else if(bookedVehicleType.equals("harvester")){
+            Tractor tractor1 = tractorService.findTractorById(bookedVehicleId);
 
-        //     Harvester harvester1 = harvesterService.findHarvesterById(bookedVehicleId);
+            if(tractor1 != null)
+            {
+                tractor1.setBooked(true);
 
-        //     if(harvester1 != null){
-        //         harvester1.setBooked(true);
-        //         bookedCarService.saveVehicle(bookedCar);
-        //         response.put("message", "Harvester booked successfully!");
-        //         return ResponseEntity.ok(response);
-        //     }else{
-        //         response.put("message", "Vehicle not found!");
-        //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        //     }
-        // }
-        // else if(bookedVehicleType.equals("bulldozer")){
+                // set booked vehicle details
+                bookedVehicle.setPickupDate(pickupDate);
+                bookedVehicle.setReturnDate(returnDate);
+                bookedVehicle.setVehicleId(bookedVehicleId);
+                bookedVehicle.setVehicleType(bookedVehicleType);
 
-        //     Bulldozer bulldozer1 = bulldozerService.findBulldozerById(bookedVehicleId);
+                bookedCarService.saveVehicle(bookedVehicle);
+                
+                response.put("message", "Tractor booked successfully!");
+                return ResponseEntity.ok(response);
+            }else{
+                response.put("message", "Vehicle not found!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        }
+        else if(bookedVehicleType.equals("harvester")){
 
-        //     if(bulldozer1 != null){
-        //         bulldozer1.setBooked(true);
-        //         bookedCarService.saveVehicle(bookedCar);
-        //         response.put("message", "Bulldozer booked successfully!");
-        //         return ResponseEntity.ok(response);
-        //     }else{
-        //         response.put("message", "Vehicle not found!");
-        //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        //     }
-        // }
-        // else if(bookedVehicleType.equals("roller")){
+            Harvester harvester1 = harvesterService.findHarvesterById(bookedVehicleId);
 
-        //     Roller roller1 = rollerService.findRollerById(bookedVehicleId);
+            if(harvester1 != null)
+            {
+                harvester1.setBooked(true);
+                
+                // set booked vehicle details
+                bookedVehicle.setPickupDate(pickupDate);
+                bookedVehicle.setReturnDate(returnDate);
+                bookedVehicle.setVehicleId(bookedVehicleId);
+                bookedVehicle.setVehicleType(bookedVehicleType);
+                
+                bookedCarService.saveVehicle(bookedVehicle);
+                
+                response.put("message", "Harvester booked successfully!");
+                return ResponseEntity.ok(response);
+            }else{
+                response.put("message", "Vehicle not found!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        }
+        else if(bookedVehicleType.equals("bulldozer")){
 
-        //     if(roller1 != null){
-        //         roller1.setBooked(true);
-        //         bookedCarService.saveVehicle(bookedCar);
-        //         response.put("message", "Roller booked successfully!");
-        //         return ResponseEntity.ok(response);
-        //     }else{
-        //         response.put("message", "Vehicle not found!");
-        //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        //     }
-        // }
-        // else if(bookedVehicleType.equals("cementMixer")){
+            Bulldozer bulldozer1 = bulldozerService.findBulldozerById(bookedVehicleId);
 
-        //     CementMixer cementMixer1 = cementMixerService.findCementMixerById(bookedVehicleId);
+            if(bulldozer1 != null)
+            {
+                bulldozer1.setBooked(true);
 
-        //     if(cementMixer1 != null){
-        //         cementMixer1.setBooked(true);
-        //         bookedCarService.saveVehicle(bookedCar);
-        //         response.put("message", "Cement Mixer booked successfully!");
-        //         return ResponseEntity.ok(response);
-        //     }else{
-        //         response.put("message", "Vehicle not found!");
-        //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        //     }
-        // }
-        // else if(bookedVehicleType.equals("truck")){
+                // set booked vehicle details
+                bookedVehicle.setPickupDate(pickupDate);
+                bookedVehicle.setReturnDate(returnDate);
+                bookedVehicle.setVehicleId(bookedVehicleId);
+                bookedVehicle.setVehicleType(bookedVehicleType);
 
-        //     Truck truck1 = truckService.findTruckById(bookedVehicleId);
+                bookedCarService.saveVehicle(bookedVehicle);
+                
+                response.put("message", "Bulldozer booked successfully!");
+                return ResponseEntity.ok(response);
+            }else{
+                response.put("message", "Vehicle not found!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        }
+        else if(bookedVehicleType.equals("roller")){
 
-        //     if(truck1 != null){
-        //         truck1.setBooked(true);
-        //         bookedCarService.saveVehicle(bookedCar);
-        //         response.put("message", "Truck booked successfully!");
-        //         return ResponseEntity.ok(response);
-        //     }else{
-        //         response.put("message", "Vehicle not found!");
-        //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        //     }
-        // }
-        // else if(bookedVehicleType.equals("cargo")){
+            Roller roller1 = rollerService.findRollerById(bookedVehicleId);
 
-        //     Cargo cargo1 = cargoService.findCargoById(bookedVehicleId);
+            if(roller1 != null)
+            {
+                roller1.setBooked(true);
 
-        //     if(cargo1 != null){
-        //         cargo1.setBooked(true);
-        //         bookedCarService.saveVehicle(bookedCar);
-        //         response.put("message", "Cargo booked successfully!");
-        //         return ResponseEntity.ok(response);
-        //     }else{
-        //         response.put("message", "Vehicle not found!");
-        //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        //     }
-        // }
-        // else if(bookedVehicleType.equals("trailer")){
+                // set booked vehicle details
+                bookedVehicle.setPickupDate(pickupDate);
+                bookedVehicle.setReturnDate(returnDate);
+                bookedVehicle.setVehicleId(bookedVehicleId);
+                bookedVehicle.setVehicleType(bookedVehicleType);
 
-        //     Trailer trailer1 = trailerService.findTrailerById(bookedVehicleId);
+                bookedCarService.saveVehicle(bookedVehicle);
+                
+                response.put("message", "Roller booked successfully!");
+                return ResponseEntity.ok(response);
+            }else{
+                response.put("message", "Vehicle not found!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        }
+        else if(bookedVehicleType.equals("cementMixer")){
 
-        //     if(trailer1 != null){
-        //         trailer1.setBooked(true);
-        //         bookedCarService.saveVehicle(bookedCar);
-        //         response.put("message", "Trailer booked successfully!");
-        //         return ResponseEntity.ok(response);
-        //     }
-        //     else{
-        //         response.put("message", "Vehicle not found!");
-        //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        //     }
-        // }
-        // response.put("message", "Vehicle not found!");
-        // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            CementMixer cementMixer1 = cementMixerService.findCementMixerById(bookedVehicleId);
 
-        
+            if(cementMixer1 != null)
+            {
+                cementMixer1.setBooked(true);
+
+                // set booked vehicle details
+                bookedVehicle.setPickupDate(pickupDate);
+                bookedVehicle.setReturnDate(returnDate);
+                bookedVehicle.setVehicleId(bookedVehicleId);
+                bookedVehicle.setVehicleType(bookedVehicleType);
+
+                bookedCarService.saveVehicle(bookedVehicle);
+
+                response.put("message", "Cement Mixer booked successfully!");
+                return ResponseEntity.ok(response);
+            }else{
+                response.put("message", "Vehicle not found!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        }
+        else if(bookedVehicleType.equals("truck")){
+
+            Truck truck1 = truckService.findTruckById(bookedVehicleId);
+
+            if(truck1 != null)
+            {
+                truck1.setBooked(true);
+
+                // set booked vehicle details
+                bookedVehicle.setPickupDate(pickupDate);
+                bookedVehicle.setReturnDate(returnDate);
+                bookedVehicle.setVehicleId(bookedVehicleId);
+                bookedVehicle.setVehicleType(bookedVehicleType);
+
+                bookedCarService.saveVehicle(bookedVehicle);
+                
+                response.put("message", "Truck booked successfully!");
+                return ResponseEntity.ok(response);
+            }else{
+                response.put("message", "Vehicle not found!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        }
+        else if(bookedVehicleType.equals("cargo")){
+
+            Cargo cargo1 = cargoService.findCargoById(bookedVehicleId);
+
+            if(cargo1 != null)
+            {
+                cargo1.setBooked(true);
+
+                // set booked vehicle details
+                bookedVehicle.setPickupDate(pickupDate);
+                bookedVehicle.setReturnDate(returnDate);
+                bookedVehicle.setVehicleId(bookedVehicleId);
+                bookedVehicle.setVehicleType(bookedVehicleType);
+                
+                bookedCarService.saveVehicle(bookedVehicle);
+                
+                response.put("message", "Cargo booked successfully!");
+                return ResponseEntity.ok(response);
+            }else{
+                response.put("message", "Vehicle not found!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        }
+        else if(bookedVehicleType.equals("trailer")){
+
+            Trailer trailer1 = trailerService.findTrailerById(bookedVehicleId);
+
+            if(trailer1 != null)
+            {
+                trailer1.setBooked(true);
+
+                // set booked vehicle details
+                bookedVehicle.setPickupDate(pickupDate);
+                bookedVehicle.setReturnDate(returnDate);
+                bookedVehicle.setVehicleId(bookedVehicleId);
+                bookedVehicle.setVehicleType(bookedVehicleType);
+
+                bookedCarService.saveVehicle(bookedVehicle);
+
+                response.put("message", "Trailer booked successfully!");
+                return ResponseEntity.ok(response);
+            }
+            else{
+                response.put("message", "Vehicle not found!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        }
+        response.put("message", "Vehicle not found!");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+
+    }
 
     @GetMapping("/vehicle/find/car")
     @ResponseBody
     public ResponseEntity<List<car>> findCar() {
+        printLocalDetails();
+        List<car> carList ;
 
-        List<car> carList = carService.findAllCars();
-
+        if(locationCity != null && pickupDate != null && returnDate != null)
+        {
+            carList = carService.findCars(locationCountry,locationState,locationCity);
+            System.out.println("----" + carList);
+        }
+        else
+        {
+            carList = carService.findAllCars();
+            System.out.println("*******-" + carList);
+        }
+    
         if (carList == null) {
             carList = new ArrayList<>();
         }
@@ -798,9 +912,20 @@ public class UserController {
     @GetMapping("/vehicle/find/bike")
     @ResponseBody
     public ResponseEntity<List<bike>> findBike() {
+        printLocalDetails();
+        List<bike> bikeList ;
 
-        List<bike> bikeList = bikeService.findAllBikes();
-
+        if(locationCity != null && pickupDate != null && returnDate != null)
+        {
+            bikeList = bikeService.findBikes(locationCountry,locationState,locationCity);
+            System.out.println("----" + bikeList);
+        }
+        else
+        {
+            bikeList = bikeService.findAllBikes();
+            System.out.println("*******-" + bikeList);
+        }
+    
         if (bikeList == null) {
             bikeList = new ArrayList<>();
         }
@@ -810,9 +935,20 @@ public class UserController {
     @GetMapping("/vehicle/find/bus")
     @ResponseBody
     public ResponseEntity<List<bus>> findBus() {
+        printLocalDetails();
+        List<bus> busList ;
 
-        List<bus> busList = busService.findAllBuss();
-
+        if(locationCity != null && pickupDate != null && returnDate != null)
+        {
+            busList = busService.findBuss(locationCountry,locationState,locationCity);
+            System.out.println("----" + busList);
+        }
+        else
+        {
+            busList = busService.findAllBuss();
+            System.out.println("*******-" + busList);
+        }
+    
         if (busList == null) {
             busList = new ArrayList<>();
         }
@@ -822,9 +958,20 @@ public class UserController {
     @GetMapping("/vehicle/find/harvester")
     @ResponseBody
     public ResponseEntity<List<Harvester>> findHarvester() {
+        printLocalDetails();
+        List<Harvester> harvesterList ;
 
-        List<Harvester> harvesterList = harvesterService.findAllHarvesters();
-
+        if(locationCity != null && pickupDate != null && returnDate != null)
+        {
+            harvesterList = harvesterService.findHarvesters(locationCountry,locationState,locationCity);
+            System.out.println("----" + harvesterList);
+        }
+        else
+        {
+            harvesterList = harvesterService.findAllHarvesters();
+            System.out.println("*******-" + harvesterList);
+        }
+    
         if (harvesterList == null) {
             harvesterList = new ArrayList<>();
         }
@@ -834,9 +981,20 @@ public class UserController {
     @GetMapping("/vehicle/find/tractor")
     @ResponseBody
     public ResponseEntity<List<Tractor>> findTractor() {
+        printLocalDetails();
+        List<Tractor> tractorList ;
 
-        List<Tractor> tractorList = tractorService.findAllTractors();
-
+        if(locationCity != null && pickupDate != null && returnDate != null)
+        {
+            tractorList = tractorService.findTractors(locationCountry,locationState,locationCity);
+            System.out.println("----" + tractorList);
+        }
+        else
+        {
+            tractorList = tractorService.findAllTractors();
+            System.out.println("*******-" + tractorList);
+        }
+    
         if (tractorList == null) {
             tractorList = new ArrayList<>();
         }
@@ -846,9 +1004,20 @@ public class UserController {
     @GetMapping("/vehicle/find/cargo")
     @ResponseBody
     public ResponseEntity<List<Cargo>> findCargo() {
+        printLocalDetails();
+        List<Cargo> cargoList ;
 
-        List<Cargo> cargoList = cargoService.findAllCargos();
-
+        if(locationCity != null && pickupDate != null && returnDate != null)
+        {
+            cargoList = cargoService.findCargos(locationCountry,locationState,locationCity);
+            System.out.println("----" + cargoList);
+        }
+        else
+        {
+            cargoList = cargoService.findAllCargos();
+            System.out.println("*******-" + cargoList);
+        }
+    
         if (cargoList == null) {
             cargoList = new ArrayList<>();
         }
@@ -858,9 +1027,20 @@ public class UserController {
     @GetMapping("/vehicle/find/trailer")
     @ResponseBody
     public ResponseEntity<List<Trailer>> findTrailer() {
+        printLocalDetails();
+        List<Trailer> TrailerList ;
 
-        List<Trailer> TrailerList = trailerService.findAllTrailers();
-
+        if(locationCity != null && pickupDate != null && returnDate != null)
+        {
+            TrailerList = trailerService.findTrailers(locationCountry,locationState,locationCity);
+            System.out.println("----" + TrailerList);
+        }
+        else
+        {
+            TrailerList = trailerService.findAllTrailers();
+            System.out.println("*******-" + TrailerList);
+        }
+    
         if (TrailerList == null) {
             TrailerList = new ArrayList<>();
         }
@@ -870,9 +1050,20 @@ public class UserController {
     @GetMapping("/vehicle/find/truck")
     @ResponseBody
     public ResponseEntity<List<Truck>> findTruck() {
+        printLocalDetails();
+        List<Truck> truckList ;
 
-        List<Truck> truckList = truckService.findAllTrucks();
-
+        if(locationCity != null && pickupDate != null && returnDate != null)
+        {
+            truckList = truckService.findTrucks(locationCountry,locationState,locationCity);
+            System.out.println("----" + truckList);
+        }
+        else
+        {
+            truckList = truckService.findAllTrucks();
+            System.out.println("*******-" + truckList);
+        }
+    
         if (truckList == null) {
             truckList = new ArrayList<>();
         }
@@ -882,9 +1073,20 @@ public class UserController {
     @GetMapping("/vehicle/find/bulldozer")
     @ResponseBody
     public ResponseEntity<List<Bulldozer>> findBulldozer() {
+        printLocalDetails();
+        List<Bulldozer> bulldozerList ;
 
-        List<Bulldozer> bulldozerList = bulldozerService.findAllBulldozers();
-
+        if(locationCity != null && pickupDate != null && returnDate != null)
+        {
+            bulldozerList = bulldozerService.findBulldozers(locationCountry,locationState,locationCity);
+            System.out.println("----" + bulldozerList);
+        }
+        else
+        {
+            bulldozerList = bulldozerService.findAllBulldozers();
+            System.out.println("*******-" + bulldozerList);
+        }
+    
         if (bulldozerList == null) {
             bulldozerList = new ArrayList<>();
         }
@@ -894,9 +1096,20 @@ public class UserController {
     @GetMapping("/vehicle/find/cementmixer")
     @ResponseBody
     public ResponseEntity<List<CementMixer>> findCementMixer() {
+        printLocalDetails();
+        List<CementMixer> cementMixerList ;
 
-        List<CementMixer> cementMixerList = cementMixerService.findAllCementMixers();
-
+        if(locationCity != null && pickupDate != null && returnDate != null)
+        {
+            cementMixerList = cementMixerService.findCementMixers(locationCountry,locationState,locationCity);
+            System.out.println("----" + cementMixerList);
+        }
+        else
+        {
+            cementMixerList = cementMixerService.findAllCementMixers();
+            System.out.println("*******-" + cementMixerList);
+        }
+    
         if (cementMixerList == null) {
             cementMixerList = new ArrayList<>();
         }
@@ -906,17 +1119,33 @@ public class UserController {
     @GetMapping("/vehicle/find/roller")
     @ResponseBody
     public ResponseEntity<List<Roller>> findRoller() {
+        printLocalDetails();
+        List<Roller> rollerList ;
 
-        List<Roller> rollerList = rollerService.findAllRollers();
-
+        if(locationCity != null && pickupDate != null && returnDate != null)
+        {
+            rollerList = rollerService.findRollers(locationCountry,locationState,locationCity);
+            System.out.println("----" + rollerList);
+        }
+        else
+        {
+            rollerList = rollerService.findAllRollers();
+            System.out.println("*******-" + rollerList);
+        }
+    
         if (rollerList == null) {
             rollerList = new ArrayList<>();
         }
         return ResponseEntity.ok(rollerList);
     }
 
+    // ---assign location and date in search details--- 
+    
     @PostMapping("/vehicle/search")
-    public void searchVehicle(@RequestBody SearchDetails searchDetails) {
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> searchVehicle(@RequestBody SearchDetails searchDetails) {
+
+        Map<String, String> response = new HashMap<>();
 
         locationCity = searchDetails.getSearchCity();
         locationState = searchDetails.getSearchState();
@@ -924,8 +1153,20 @@ public class UserController {
         pickupDate = searchDetails.getPickupDate();
         returnDate = searchDetails.getReturnDate();
 
+        response.put("message", "Data sent successfully");
+        System.out.println(pickupDate + "----***************************************-----" + returnDate);
+        printLocalDetails();
+         return ResponseEntity.ok(response);
     }
 
+    public void printLocalDetails(){
+
+        System.out.println("locationCountry" + locationCountry);
+        System.out.println("locationCountry" + locationState);
+        System.out.println("locationCountry" + locationCity);
+        System.out.println("locationCountry" + pickupDate);
+        System.out.println("locationCountry" + returnDate);
+    }
 
     public boolean checkEmail( String email) {
         

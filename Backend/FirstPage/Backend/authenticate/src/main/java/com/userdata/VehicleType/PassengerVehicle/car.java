@@ -38,6 +38,7 @@ public class car {
      private double VehicleRentPrice;
      private String VehicleAdditionalInfo;
      private boolean isBooked;
+     private String imageUrl ;
 
      public int getVehicle_id() {
           return vehicle_id;
@@ -134,7 +135,19 @@ public class car {
      public void setPassengerVehicle(PassengerVehicle passengerVehicle) {
           this.passengerVehicle = passengerVehicle;
      }
+     public String getImageUrl() {
+          return imageUrl;
+     }
+     public void setImageUrl(String imageUrl) {
+          this.imageUrl = imageUrl;
+     }
+     @Override
+     public String toString() {
+          return "car [vehicle_id=" + vehicle_id 
+                    + "]";
+     }
    
+     
 }
 
 

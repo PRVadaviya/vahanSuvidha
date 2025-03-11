@@ -1,14 +1,19 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { login } from "../../features/Authentication/AuthSlice";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error,setError] = useState(false)
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log({ email, password });
+    
 
     try {
       const response = await fetch("http://localhost:9203/User/login", {
@@ -22,6 +27,8 @@ const Login = () => {
       if (response.ok) { 
         console.log("Login Successful!");
         alert("Successful Sign In !");
+        dispatch(login({email,isAuthenticated:true}))
+        
         navigate("/"); // Redirect after successful login
       } else {
         console.error("Login Failed");
@@ -38,7 +45,7 @@ const Login = () => {
         <h1 className="text-2xl font-bold text-center text-gray-700 mb-6">
           Sign In
         </h1>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4" method="POST">
           {/* Email Input */}
           <div>
             <label className="block text-gray-600">Email</label>

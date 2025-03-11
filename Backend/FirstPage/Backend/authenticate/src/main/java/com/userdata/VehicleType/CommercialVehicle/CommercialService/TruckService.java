@@ -14,9 +14,9 @@ public class TruckService {
      @Autowired
      private TruckRepository truckRepository;
 
-     public List<Truck> findTrailers(String country , String state , String city , int pvid)
+     public List<Truck> findTrucks(String country , String state , String city)
      {
-          return truckRepository.findTruckByCountryStateCity(country, state, city, pvid);
+          return truckRepository.findTruckByCountryStateCity(country, state, city);
      }
 
      public Truck findTruckById(int id)

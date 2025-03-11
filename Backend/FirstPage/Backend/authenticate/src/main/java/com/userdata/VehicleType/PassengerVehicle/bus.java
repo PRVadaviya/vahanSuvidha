@@ -38,6 +38,7 @@ public class bus {
      private double VehicleRentPrice;
      private String VehicleAdditionalInfo;
      private boolean isBooked;
+     private String imageUrl ;
 
      public int getVehicle_id() {
           return vehicle_id;
@@ -134,5 +135,11 @@ public class bus {
      }
      public void setPassengerVehicle(PassengerVehicle passengerVehicle) {
           this.passengerVehicle = passengerVehicle;
+     }
+     public String getImageUrl() {
+          return imageUrl;
+     }
+     public void setImageUrl(String imageUrl) {
+          this.imageUrl = imageUrl;
      }
 }
