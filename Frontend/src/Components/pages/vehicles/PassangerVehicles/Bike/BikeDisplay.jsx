@@ -4,9 +4,10 @@ import './bike.css'
 import HeaderCard from '../HeaderCard'
 import { addToCart } from "../../../../../features/AddToCart/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useTheme } from "../../../../../App";
 
 const BikeDisplay = () => {
-
+  const theme = useTheme()
   const dispatch = useDispatch();
   const items = useSelector((state) => state.cart); // Get cart items from Redux
   const [BikeData, setBikeData] = useState([]);
@@ -44,7 +45,7 @@ const BikeDisplay = () => {
               </div>
               <div className="car-details">
                 <div className="font-bold text-green-700 underline">
-                  <h3>{bike.vehicleName}</h3>
+                  <h3 style={{color : theme.dark}} >{bike.vehicleName}</h3>
                 </div>
                 <p className="car-price">${bike.vehicleRentPrice} per day</p>
                 <div className="car-specs">
@@ -55,7 +56,8 @@ const BikeDisplay = () => {
                 </div>
                 <button
                   onClick={() => dispatch(addToCart(bike))}
-                  className={`book-btn ${isCarInCart(bike) ? "added" : ""}`}
+                  className={`book-btn ${isCarInCart(bike) ? "added" : ""} `}
+                  style={{backgroundColor:theme.primary}}
                 >
                   {isCarInCart(bike) ? "✓ Added!" : "Add To Cart"}
                 </button>

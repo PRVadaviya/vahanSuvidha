@@ -2,10 +2,13 @@ import { Link, NavLink } from "react-router-dom";
 import logo from '../../assets/logo.png'
 import { logout } from "../../features/Authentication/AuthSlice";
 import { useDispatch } from "react-redux";
+import { useTheme } from "../../App";
 
 
 
 const Header = () => {
+
+  const theme = useTheme()
 
   const dispatch = useDispatch()
 
@@ -17,24 +20,24 @@ const Header = () => {
     }
   }
   return (
-    <header className="bg-gray-800 text-white">
+    <header className="btext-white" style={{backgroundColor:theme.primary}}>
       <div className="container mx-auto px-6 flex flex-wrap justify-between items-center py-4">
 
-        {/* <img src={logo} alt="" /> */}
-        <h1 className="text-2xl font-bold">vahanSuvidha</h1>
+        <img src={logo} alt="" style={{height:'60px',width:'210px'}} />
+        {/* <h1 className="text-2xl font-bold">vahanSuvidha</h1> */}
 
         {/* Navigation Links */}
         <nav className="hidden lg:flex space-x-8">
-          <NavLink to="/" className={({ isActive }) => `hober:underline ${isActive ? 'text-green-500' : 'text-white'}`}>
+          <NavLink to="/" className={({ isActive }) => `hover:underline ${isActive ? theme.dark : theme.light }`}>
             Reservation
           </NavLink>
-          <NavLink to="/vehicles" className={({ isActive }) => `hober:underline ${isActive ? 'text-green-500' : 'text-white'}`}>
+          <NavLink to="/vehicles" className={({ isActive }) => `hover:underline ${isActive ? theme.dark : theme.light }`}>
             Vehicles
           </NavLink>
-          <NavLink to="/equipment" className={({ isActive }) => `hober:underline ${isActive ? 'text-green-500' : 'text-white'}`}>
+          <NavLink to="/equipment" className={({ isActive }) => `hover:underline ${isActive ? theme.dark : theme.light }`}>
             Equipment
           </NavLink>
-          <NavLink to="/bussiness" className={({ isActive }) => `hober:underline ${isActive ? 'text-green-500' : 'text-white'}`}>
+          <NavLink to="/bussiness" className={({ isActive }) => `hover:underline ${isActive ? theme.dark : theme.light }`}>
             For Bussiness
           </NavLink>
           {/* <NavLink to="/booking" className={({ isActive }) => `hober:underline ${isActive ? 'text-green-500' : 'text-white'}`}>
